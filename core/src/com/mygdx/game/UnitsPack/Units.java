@@ -1,10 +1,29 @@
-package com.mygdx.game;
+package com.mygdx.game.UnitsPack;
 
-public class Units {
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.ItemsPack.Items;
+import com.mygdx.game.SkillsPack.Skills;
+
+public abstract class Units {
     public String name;
     public int hitpoints;
-    int defence, damage;
-    float x, y;
+    public int defence, damage;
+    public float x, y;
+    public Items items[];
+    public Skills skills[];
+    public Texture img;
+
+    public Units(String name, float x, float y, Texture img) {
+        this.img = img;
+        this.name = name;
+        this.x = x;
+        this.y = y;
+    }
+
+    public Units(String name, float x, float y) {
+    }
+
 
     public float getX() {
         return x;
@@ -51,4 +70,7 @@ public class Units {
             d = this.damage - a.defence;
         a.hitpoints -= d;
     }
+
+    public void draw(SpriteBatch batch){}
+    public void update(){}
 }
