@@ -1,4 +1,4 @@
-package menu;
+package com.mygdx.game.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,7 +20,7 @@ public class Buttons extends Stage {
     public Buttons(final MyGame mygame) {
         game = mygame;
 
-        game1 = new Games(game);
+        game1 = new Games();
 
         buttonUpImage = new Texture("play.png");
         buttonDownImage = new Texture("play.png");

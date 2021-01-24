@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.mygdx.game.GameSc.Games;
-import menu.Menu;
+import com.mygdx.game.menu.Menu;
 
 
 public class MyGame extends Game {
@@ -14,7 +14,7 @@ public class MyGame extends Game {
 	@Override
 	public void create () {
         menu = new Menu(this);
-        games = new Games(this);
+        games = new Games();
         setScreen(menu);
 	}
 
