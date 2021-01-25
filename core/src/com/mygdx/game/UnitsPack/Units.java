@@ -1,5 +1,6 @@
 package com.mygdx.game.UnitsPack;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -62,13 +63,20 @@ public abstract class Units {
     }
 
     public void Move(float x, float y) {
+        y = Gdx.graphics.getHeight() - y;
         steps = (int) (k * Math.sqrt((x - this.x) * (x - this.x) + (y - this.y) * (y - this.y)) / Speed);
         dx = (x - this.x) / steps;
         dy = (y - this.y) / steps;
+        if (this.x == x && this.y == y) {
+            this.x += 0;
+            this.y += 0;
+        }
+        else {
             this.x += dx;
             this.y += dy;
+        }
     }
-    //TODO нужно разобраться с инвертированностью по игреку
+
 
     public void Attack(Units a) {
         int d;

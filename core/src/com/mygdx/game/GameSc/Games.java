@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.UnitsPack.Player;
@@ -24,10 +25,9 @@ public class Games implements Screen, InputProcessor {
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(true, 800, 480);
         pause = new Texture(Gdx.files.internal("pause.png"));
         inventor = new Texture(Gdx.files.internal("inventor .png"));
-
         player = new Player("Player", 0, 0);
         touchPos = new Vector3();
         camera.unproject(touchPos);
@@ -54,7 +54,7 @@ public class Games implements Screen, InputProcessor {
         if (A = true) {
             player.Move(touchPos.x, touchPos.y);
         }
-        //TODO нужно сделать остановку
+        player.update();
         batch.end();
     }
 
