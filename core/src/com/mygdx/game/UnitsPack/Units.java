@@ -19,14 +19,10 @@ public abstract class Units {
     public int steps;
     public boolean A = true;
 
-    public Units(String name, float x, float y, Texture img) {
-        this.img = img;
+    public Units(String name, float x, float y) {
         this.name = name;
         this.x = x;
         this.y = y;
-    }
-
-    public Units(String name, float x, float y) {
     }
 
 

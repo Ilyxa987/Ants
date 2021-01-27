@@ -51,7 +51,7 @@ public class Games implements Screen, InputProcessor {
         batch.draw(pause, 1350,600);
         batch.draw(inventor, 1360,500);
         player.draw(batch);
-        if (A == true) {
+        if (A = true) {
             player.Move(touchPos.x, touchPos.y);
         }
         player.update();
