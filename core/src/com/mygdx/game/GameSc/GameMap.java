@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.UnitsPack.Enemy;
 import com.mygdx.game.UnitsPack.Player;
 
 public class GameMap extends Stage {
@@ -15,8 +16,9 @@ public class GameMap extends Stage {
     int mapArray[][];
     float height = Gdx.graphics.getHeight(), width = Gdx.graphics.getWidth();
     float x, y;
-    boolean A = false;
+    public boolean A = false;
     Player player;
+    Enemy enemy;
     Vector3 touchPos;
     OrthographicCamera camera;
 
@@ -24,6 +26,7 @@ public class GameMap extends Stage {
         this.games = games;
 
         player = new Player("Player", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3 * 2, Gdx.graphics.getHeight() / 2);
 
         camera = new OrthographicCamera();
         touchPos = new Vector3();
@@ -63,18 +66,20 @@ public class GameMap extends Stage {
             x = 0;
         }
         player.draw(batch);
-        if (A) {
+        if (player.B) {
             player.Move(touchPos.x, touchPos.y);
         }
-        player.update();
+        player.update(enemy);
+        enemy.draw(batch);
+        enemy.update(player);
         batch.end();
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-        A = true;
+        player.B = true;
         touchPos.set(screenX, screenY, 0);
-        return A;
+        return player.B;
     }
 }

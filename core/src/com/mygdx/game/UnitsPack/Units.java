@@ -4,10 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.ItemsPack.Items;
 import com.mygdx.game.SkillsPack.Skills;
 
-public abstract class Units {
+
+import java.awt.Rectangle;
+
+public abstract class Units extends Actor {
     public String name;
     public int hitpoints, Speed = 100;
     public int defence, damage;
@@ -17,7 +21,10 @@ public abstract class Units {
     public Texture img;
     public final int k = 25;
     public int steps;
-    public boolean A = true;
+    public boolean B = false;
+
+
+
 
     public Units(String name, float x, float y) {
         this.name = name;
@@ -64,13 +71,18 @@ public abstract class Units {
         dx = (x - this.x) / steps;
         dy = (y - this.y) / steps;
         if (this.x == x && this.y == y) {
-            this.x += 0;
-            this.y += 0;
+            this.Stop();
         }
         else {
             this.x += dx;
             this.y += dy;
         }
+    }
+
+    public void Stop() {
+        this.x += 0;
+        this.y += 0;
+        B = false;
     }
 
 
@@ -84,5 +96,5 @@ public abstract class Units {
     }
 
     public void draw(SpriteBatch batch){}
-    public void update(){}
+    public void update(Units units) {}
 }
