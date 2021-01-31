@@ -1,0 +1,831 @@
+Index: ядро/src/com/mygdx/игра/GameSc/Games.java
+===================================================================
+--- ядро/src/com/mygdx/игра/GameSc/Games.java	(revision be85039ba0f324de165659733b3cdae177e6e2ca)
++++ ядро/src/com/mygdx/игра/GameSc/Games.java	(revision be85039ba0f324de165659733b3cdae177e6e2ca)
+@@ -1,129 +0,0 @@
+-package com.mygdx.game.GameSc;
+-
+-import com.badlogic.gdx.Gdx;
+-import com.badlogic.gdx.InputProcessor;
+-import com.badlogic.gdx.Screen;
+-import com.badlogic.gdx.graphics.GL20;
+-import com.badlogic.gdx.graphics.OrthographicCamera;
+-import com.badlogic.gdx.graphics.Texture;
+-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+-import com.badlogic.gdx.math.Vector2;
+-import com.badlogic.gdx.math.Vector3;
+-import com.mygdx.game.MyGame;
+-import com.mygdx.game.UnitsPack.Player;
+-
+-public class Games implements Screen, InputProcessor {
+-    private SpriteBatch batch;
+-    private Texture pause, inventor;
+-    Player player;
+-    OrthographicCamera camera;
+-    Vector3 touchPos;
+-    Boolean A = false;
+-
+-
+-    public Games() {
+-
+-        batch = new SpriteBatch();
+-        camera = new OrthographicCamera();
+-        camera.setToOrtho(true, 800, 480);
+-        pause = new Texture(Gdx.files.internal("pause.png"));
+-        inventor = new Texture(Gdx.files.internal("inventor .png"));
+-        player = new Player("Player", 0, 0);
+-        touchPos = new Vector3();
+-        camera.unproject(touchPos);
+-    }
+-
+-
+-    @Override
+-    public void show() {
+-
+-    }
+-
+-    @Override
+-    public void render(float delta) {
+-        Gdx.gl.glClearColor(0, 0, 0, 1);
+-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+-        Gdx.input.setInputProcessor(this);
+-
+-        camera.update();
+-
+-        batch.begin();
+-        batch.draw(pause, 1350,600);
+-        batch.draw(inventor, 1360,500);
+-        player.draw(batch);
+-        if (A = true) {
+-            player.Move(touchPos.x, touchPos.y);
+-        }
+-        player.update();
+-        batch.end();
+-    }
+-
+-    @Override
+-    public void resize(int width, int height) {
+-
+-    }
+-
+-    @Override
+-    public void pause() {
+-
+-    }
+-
+-    @Override
+-    public void resume() {
+-
+-    }
+-
+-    @Override
+-    public void hide() {
+-
+-    }
+-
+-    @Override
+-    public void dispose () {
+-        batch.dispose();
+-        pause.dispose();
+-    }
+-
+-    @Override
+-    public boolean keyDown(int keycode) {
+-        return false;
+-    }
+-
+-    @Override
+-    public boolean keyUp(int keycode) {
+-        return false;
+-    }
+-
+-    @Override
+-    public boolean keyTyped(char character) {
+-        return false;
+-    }
+-
+-    @Override
+-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+-        System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+-        A = true;
+-        touchPos.set(screenX, screenY, 0);
+-        return A;
+-    }
+-
+-    @Override
+-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+-        return false;
+-    }
+-
+-    @Override
+-    public boolean touchDragged(int screenX, int screenY, int pointer) {
+-        return false;
+-    }
+-
+-    @Override
+-    public boolean mouseMoved(int screenX, int screenY) {
+-        return false;
+-    }
+-
+-    @Override
+-    public boolean scrolled(float amountX, float amountY) {
+-        return false;
+-    }
+-}
+Index: core/src/com/mygdx/game/GameSc/GameMap.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/src/com/mygdx/game/GameSc/GameMap.java	(revision be85039ba0f324de165659733b3cdae177e6e2ca)
++++ core/src/com/mygdx/game/GameSc/GameMap.java	(date 1611841824060)
+@@ -6,6 +6,7 @@
+ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+ import com.badlogic.gdx.math.Vector3;
+ import com.badlogic.gdx.scenes.scene2d.Stage;
++import com.mygdx.game.UnitsPack.Enemy;
+ import com.mygdx.game.UnitsPack.Player;
+ 
+ public class GameMap extends Stage {
+@@ -15,8 +16,9 @@
+     int mapArray[][];
+     float height = Gdx.graphics.getHeight(), width = Gdx.graphics.getWidth();
+     float x, y;
+-    boolean A = false;
++    public boolean A = false;
+     Player player;
++    Enemy enemy;
+     Vector3 touchPos;
+     OrthographicCamera camera;
+ 
+@@ -24,6 +26,7 @@
+         this.games = games;
+ 
+         player = new Player("Player", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
++        enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3 * 2, Gdx.graphics.getHeight() / 2);
+ 
+         camera = new OrthographicCamera();
+         touchPos = new Vector3();
+@@ -63,18 +66,20 @@
+             x = 0;
+         }
+         player.draw(batch);
+-        if (A) {
++        if (player.B) {
+             player.Move(touchPos.x, touchPos.y);
+         }
+-        player.update();
++        player.update(enemy);
++        enemy.draw(batch);
++        enemy.update(player);
+         batch.end();
+     }
+ 
+     @Override
+     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+         System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+-        A = true;
++        player.B = true;
+         touchPos.set(screenX, screenY, 0);
+-        return A;
++        return player.B;
+     }
+ }
+Index: core/src/com/mygdx/game/UnitsPack/Units.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/src/com/mygdx/game/UnitsPack/Units.java	(revision be85039ba0f324de165659733b3cdae177e6e2ca)
++++ core/src/com/mygdx/game/UnitsPack/Units.java	(date 1611841893427)
+@@ -4,10 +4,14 @@
+ import com.badlogic.gdx.graphics.Texture;
+ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+ import com.badlogic.gdx.scenes.scene2d.Actor;
++import com.mygdx.game.GameSc.GameMap;
+ import com.mygdx.game.ItemsPack.Items;
+ import com.mygdx.game.SkillsPack.Skills;
+ 
+-public abstract class Units {
++
++import java.awt.Rectangle;
++
++public abstract class Units extends Actor {
+     public String name;
+     public int hitpoints, Speed = 100;
+     public int defence, damage;
+@@ -17,7 +21,10 @@
+     public Texture img;
+     public final int k = 25;
+     public int steps;
+-    public boolean A = true;
++    public boolean B = false;
++
++
++
+ 
+     public Units(String name, float x, float y) {
+         this.name = name;
+@@ -64,8 +71,7 @@
+         dx = (x - this.x) / steps;
+         dy = (y - this.y) / steps;
+         if (this.x == x && this.y == y) {
+-            this.x += 0;
+-            this.y += 0;
++            this.Stop();
+         }
+         else {
+             this.x += dx;
+@@ -73,6 +79,12 @@
+         }
+     }
+ 
++    public void Stop() {
++        this.x += 0;
++        this.y += 0;
++        B = false;
++    }
++
+ 
+     public void Attack(Units a) {
+         int d;
+@@ -84,5 +96,5 @@
+     }
+ 
+     public void draw(SpriteBatch batch){}
+-    public void update(){}
++    public void update(Units units) {}
+ }
+\ No newline at end of file
+Index: core/src/com/mygdx/game/UnitsPack/Enemy.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/src/com/mygdx/game/UnitsPack/Enemy.java	(date 1611840638458)
++++ core/src/com/mygdx/game/UnitsPack/Enemy.java	(date 1611840638458)
+@@ -0,0 +1,40 @@
++package com.mygdx.game.UnitsPack;
++
++import com.badlogic.gdx.Gdx;
++import com.badlogic.gdx.graphics.Texture;
++import com.badlogic.gdx.graphics.g2d.SpriteBatch;
++import com.badlogic.gdx.scenes.scene2d.Actor;
++
++import java.awt.Rectangle;
++
++
++public class Enemy extends Units {
++    Texture img = new Texture("enemy.png");
++
++
++    public Enemy(String name, float x, float y) {
++        super(name, x, y);
++        this.setBounds(x, y, x + 64, y + 64);
++    }
++
++    @Override
++    public void draw(SpriteBatch batch) {
++        batch.draw(img, x, y);
++    }
++
++    @Override
++    public void update(Units units) {
++        if (x + 64 > Gdx.graphics.getWidth()) {
++            x = Gdx.graphics.getWidth() - 64;
++        }
++        if (x < 0) {
++            x = 0;
++        }
++        if (y + 64 > Gdx.graphics.getHeight()) {
++            y = Gdx.graphics.getHeight() - 64;
++        }
++        if (y < 0) {
++            y = 0;
++        }
++    }
++}
+Index: Five1.patch
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Five1.patch	(date 1611756914837)
++++ Five1.patch	(date 1611756914837)
+@@ -0,0 +1,63 @@
++Index: core/src/com/mygdx/game/GameSc/Games.java
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++--- core/src/com/mygdx/game/GameSc/Games.java	(date 1611756842696)
+++++ core/src/com/mygdx/game/GameSc/Games.java	(date 1611756842696)
++@@ -0,0 +1,54 @@
+++package com.mygdx.game.GameSc;
+++
+++import com.badlogic.gdx.Gdx;
+++import com.badlogic.gdx.Screen;
+++import com.badlogic.gdx.graphics.OrthographicCamera;
+++import com.badlogic.gdx.graphics.Texture;
+++import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+++
+++public class Games implements Screen {
+++    private SpriteBatch batch = new SpriteBatch();
+++    private Texture pause;
+++    private Texture inventor;
+++    OrthographicCamera camera = new OrthographicCamera();
+++    GameMap gameMap;
+++
+++    public Games() {
+++        this.camera.setToOrtho(false, 800.0F, 480.0F);
+++        this.pause = new Texture(Gdx.files.internal("pause.png"));
+++        this.inventor = new Texture(Gdx.files.internal("inventor .png"));
+++        this.gameMap = new GameMap(this);
+++    }
+++
+++    public void show() {
+++    }
+++
+++    public void render(float delta) {
+++        Gdx.gl.glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
+++        Gdx.gl.glClear(16384);
+++        Gdx.input.setInputProcessor(this.gameMap);
+++        this.camera.update();
+++        this.gameMap.draw();
+++        this.batch.begin();
+++        this.batch.draw(this.pause, 1350.0F, 600.0F);
+++        this.batch.draw(this.inventor, 1360.0F, 500.0F);
+++        this.batch.end();
+++    }
+++
+++    public void resize(int width, int height) {
+++    }
+++
+++    public void pause() {
+++    }
+++
+++    public void resume() {
+++    }
+++
+++    public void hide() {
+++    }
+++
+++    public void dispose() {
+++        this.batch.dispose();
+++        this.pause.dispose();
+++    }
+++}
++\ No newline at end of file
+Index: Five2.patch
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Five2.patch	(date 1611757025456)
++++ Five2.patch	(date 1611757025456)
+@@ -0,0 +1,149 @@
++Index: core/src/com/mygdx/game/GameSc/GameMap.java
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++--- core/src/com/mygdx/game/GameSc/GameMap.java	(revision 384875a73cf092eae73a34e16dcc585c07a0df5c)
+++++ core/src/com/mygdx/game/GameSc/GameMap.java	(date 1611756996600)
++@@ -1,7 +1,6 @@
++ package com.mygdx.game.GameSc;
++ 
++ import com.badlogic.gdx.Gdx;
++-import com.badlogic.gdx.InputProcessor;
++ import com.badlogic.gdx.graphics.OrthographicCamera;
++ import com.badlogic.gdx.graphics.Texture;
++ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
++Index: Five1.patch
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++--- Five1.patch	(date 1611756914837)
+++++ Five1.patch	(date 1611756914837)
++@@ -0,0 +1,63 @@
+++Index: core/src/com/mygdx/game/GameSc/Games.java
+++IDEA additional info:
+++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+++<+>UTF-8
+++===================================================================
+++--- core/src/com/mygdx/game/GameSc/Games.java	(date 1611756842696)
++++++ core/src/com/mygdx/game/GameSc/Games.java	(date 1611756842696)
+++@@ -0,0 +1,54 @@
++++package com.mygdx.game.GameSc;
++++
++++import com.badlogic.gdx.Gdx;
++++import com.badlogic.gdx.Screen;
++++import com.badlogic.gdx.graphics.OrthographicCamera;
++++import com.badlogic.gdx.graphics.Texture;
++++import com.badlogic.gdx.graphics.g2d.SpriteBatch;
++++
++++public class Games implements Screen {
++++    private SpriteBatch batch = new SpriteBatch();
++++    private Texture pause;
++++    private Texture inventor;
++++    OrthographicCamera camera = new OrthographicCamera();
++++    GameMap gameMap;
++++
++++    public Games() {
++++        this.camera.setToOrtho(false, 800.0F, 480.0F);
++++        this.pause = new Texture(Gdx.files.internal("pause.png"));
++++        this.inventor = new Texture(Gdx.files.internal("inventor .png"));
++++        this.gameMap = new GameMap(this);
++++    }
++++
++++    public void show() {
++++    }
++++
++++    public void render(float delta) {
++++        Gdx.gl.glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
++++        Gdx.gl.glClear(16384);
++++        Gdx.input.setInputProcessor(this.gameMap);
++++        this.camera.update();
++++        this.gameMap.draw();
++++        this.batch.begin();
++++        this.batch.draw(this.pause, 1350.0F, 600.0F);
++++        this.batch.draw(this.inventor, 1360.0F, 500.0F);
++++        this.batch.end();
++++    }
++++
++++    public void resize(int width, int height) {
++++    }
++++
++++    public void pause() {
++++    }
++++
++++    public void resume() {
++++    }
++++
++++    public void hide() {
++++    }
++++
++++    public void dispose() {
++++        this.batch.dispose();
++++        this.pause.dispose();
++++    }
++++}
+++\ No newline at end of file
++Index: core/src/com/mygdx/game/GameSc/Games.java
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++--- core/src/com/mygdx/game/GameSc/Games.java	(date 1611756842696)
+++++ core/src/com/mygdx/game/GameSc/Games.java	(date 1611756842696)
++@@ -0,0 +1,54 @@
+++package com.mygdx.game.GameSc;
+++
+++import com.badlogic.gdx.Gdx;
+++import com.badlogic.gdx.Screen;
+++import com.badlogic.gdx.graphics.OrthographicCamera;
+++import com.badlogic.gdx.graphics.Texture;
+++import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+++
+++public class Games implements Screen {
+++    private SpriteBatch batch = new SpriteBatch();
+++    private Texture pause;
+++    private Texture inventor;
+++    OrthographicCamera camera = new OrthographicCamera();
+++    GameMap gameMap;
+++
+++    public Games() {
+++        this.camera.setToOrtho(false, 800.0F, 480.0F);
+++        this.pause = new Texture(Gdx.files.internal("pause.png"));
+++        this.inventor = new Texture(Gdx.files.internal("inventor .png"));
+++        this.gameMap = new GameMap(this);
+++    }
+++
+++    public void show() {
+++    }
+++
+++    public void render(float delta) {
+++        Gdx.gl.glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
+++        Gdx.gl.glClear(16384);
+++        Gdx.input.setInputProcessor(this.gameMap);
+++        this.camera.update();
+++        this.gameMap.draw();
+++        this.batch.begin();
+++        this.batch.draw(this.pause, 1350.0F, 600.0F);
+++        this.batch.draw(this.inventor, 1360.0F, 500.0F);
+++        this.batch.end();
+++    }
+++
+++    public void resize(int width, int height) {
+++    }
+++
+++    public void pause() {
+++    }
+++
+++    public void resume() {
+++    }
+++
+++    public void hide() {
+++    }
+++
+++    public void dispose() {
+++        this.batch.dispose();
+++        this.pause.dispose();
+++    }
+++}
++\ No newline at end of file
+Index: core/src/com/mygdx/game/UnitsPack/Player.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/src/com/mygdx/game/UnitsPack/Player.java	(revision be85039ba0f324de165659733b3cdae177e6e2ca)
++++ core/src/com/mygdx/game/UnitsPack/Player.java	(date 1611984750242)
+@@ -3,10 +3,12 @@
+ import com.badlogic.gdx.Gdx;
+ import com.badlogic.gdx.graphics.Texture;
+ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+-import com.mygdx.game.GameSc.Games;
++import com.badlogic.gdx.scenes.scene2d.Actor;
++
++import java.awt.Rectangle;
++
+ 
+ public class Player extends Units {
+-    Games game;
+     Texture img = new Texture("icon.png");
+ 
+     public Player(String name, float x, float y) {
+@@ -19,7 +21,7 @@
+     }
+ 
+     @Override
+-    public void update() {
++    public void update(Units units) {
+         if (x + 32 > Gdx.graphics.getWidth()) {
+             x = Gdx.graphics.getWidth() - 32;
+         }
+@@ -32,5 +34,8 @@
+         if (y < 0) {
+             y = 0;
+         }
++        if (x + 32 >= units.getX() && y >= units.getY() - 32 && y <= units.getY() + 64 && x <= units.getX() + 64)
++            this.Stop();
+     }
+ }
++
+diff --git android/assets/badlogic.jpg android/assets/badlogic.jpg
+deleted file mode 100644
+index 4390da6e0f6d041590c6313d2b4c978abc00a342..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git android/assets/enemy.png android/assets/enemy.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..0d8e20c3369d18df85972a7583a1e2a70476fe91
+GIT binary patch
+literal 12613
+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
+

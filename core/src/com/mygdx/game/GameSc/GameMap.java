@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.UnitsPack.Enemy;
 import com.mygdx.game.UnitsPack.Player;
+import com.mygdx.game.menu.Menu;
 
 public class GameMap extends Stage {
     int textureSize = 32;

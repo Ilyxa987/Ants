@@ -14,7 +14,7 @@ public class MyGame extends Game {
 	@Override
 	public void create () {
         menu = new Menu(this);
-        games = new Games();
+        games = new Games(this, menu);
         setScreen(menu);
 	}
 

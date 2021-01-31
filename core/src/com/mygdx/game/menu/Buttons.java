@@ -16,11 +16,14 @@ public class Buttons extends Stage {
     Texture buttonUpImage, buttonDownImage, settingsImage, exitImage;
     TextButton button, settings, exit;
     public Games game1;
+    final Menu menu;
 
-    public Buttons(final MyGame mygame) {
+    public Buttons(final MyGame mygame, final Menu menu) {
         game = mygame;
 
-        game1 = new Games();
+        this.menu = menu;
+
+        game1 = new Games(game, this.menu);
 
         buttonUpImage = new Texture("play.png");
         buttonDownImage = new Texture("play.png");
@@ -71,7 +74,6 @@ public class Buttons extends Stage {
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("It is test game");
                 game.setScreen(game1);
-                dispose();
             }
         });
 

@@ -24,8 +24,7 @@ public class Menu implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         createBackground();
-        buttons = new Buttons(game);
-        Gdx.input.setInputProcessor(buttons);
+        buttons = new Buttons(game, this);
     }
 
     private void createBackground() {
@@ -45,6 +44,8 @@ public class Menu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
+
+        Gdx.input.setInputProcessor(buttons);
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
