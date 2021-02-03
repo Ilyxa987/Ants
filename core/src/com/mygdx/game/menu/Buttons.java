@@ -57,15 +57,15 @@ public class Buttons extends Stage {
         exitStyle.checked = skin.getDrawable("exit");
 
         button = new TextButton("", textButtonStyle);
-        button.setPosition(600, 380);
+        button.setPosition(Gdx.graphics.getWidth() / 2 - buttonUpImage.getWidth() / 2, Gdx.graphics.getHeight() / 2 + settingsImage.getHeight() / 2);
         addActor(button);
 
         settings = new TextButton("", settingsStyle);
-        settings.setPosition(550, 200);
+        settings.setPosition(Gdx.graphics.getWidth() / 2 - settingsImage.getWidth() / 2, Gdx.graphics.getHeight() / 2 - settingsImage.getHeight() / 2);
         addActor(settings);
 
         exit = new TextButton("", exitStyle);
-        exit.setPosition(560, 90);
+        exit.setPosition(Gdx.graphics.getWidth() / 2 - exitImage.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 2 - settingsImage.getHeight() - exitImage.getHeight() / 2);
         addActor(exit);
 
         button.addListener(new ChangeListener() {
