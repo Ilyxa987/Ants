@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.ItemsPack.Items;
+import com.mygdx.game.ItemsPack.Weapon;
 import com.mygdx.game.SkillsPack.Skills;
 
 
@@ -63,6 +64,10 @@ public abstract class Units extends Actor {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public int getHitpoints() {
+        return hitpoints;
     }
 
     public void Move(float x, float y) {

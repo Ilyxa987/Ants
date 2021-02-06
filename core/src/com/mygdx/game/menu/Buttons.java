@@ -81,7 +81,6 @@ public class Buttons extends Stage {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("SETTING");
-                dispose();
             }
         });
 

@@ -15,6 +15,7 @@ public class Enemy extends Units {
     public Enemy(String name, float x, float y) {
         super(name, x, y);
         this.setBounds(x, y, x + 64, y + 64);
+        hitpoints = 20;
     }
 
     @Override

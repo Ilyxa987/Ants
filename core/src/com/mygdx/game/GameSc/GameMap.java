@@ -23,6 +23,7 @@ public class GameMap extends Stage {
     Enemy enemy;
     Vector3 touchPos;
     OrthographicCamera camera;
+    HealthBar healthBar, enemyHealthBar;
 
     public GameMap(Games games) {
         this.games = games;
@@ -33,6 +34,12 @@ public class GameMap extends Stage {
         camera = new OrthographicCamera();
         touchPos = new Vector3();
         camera.unproject(touchPos);
+
+        healthBar = new HealthBar(player.getHitpoints(), player.getX(), player.getY());
+        addActor(healthBar);
+
+        enemyHealthBar = new HealthBar(enemy.getHitpoints(), enemy.getX(), enemy.getY());
+        addActor(healthBar);
 
         spriteOne = new Texture("spriteOne.png");
         spriteTwo = new Texture("spriteTwo.png");
@@ -74,6 +81,8 @@ public class GameMap extends Stage {
         player.update(enemy);
         enemy.draw(batch);
         enemy.update(player);
+        healthBar.draw(batch, 1, player.getX(), player.getY());
+        enemyHealthBar.draw(batch, 1, enemy.getX(), enemy.getY());
         batch.end();
     }
 
