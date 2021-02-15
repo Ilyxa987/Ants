@@ -1,5 +1,10 @@
 package com.mygdx.game.ItemsPack;
 
 public class Weapon {
-    int damage;
+
+    public Weapon(int damage) {
+        this.damage = damage;
+    }
+
+    public int damage;
 }

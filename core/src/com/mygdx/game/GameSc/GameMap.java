@@ -5,8 +5,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.MyGame;
+import com.mygdx.game.SkillsPack.AttackSkill;
 import com.mygdx.game.UnitsPack.Enemy;
 import com.mygdx.game.UnitsPack.Player;
 import com.mygdx.game.menu.Menu;
@@ -23,13 +26,13 @@ public class GameMap extends Stage {
     Enemy enemy;
     Vector3 touchPos;
     OrthographicCamera camera;
-    HealthBar healthBar, enemyHealthBar;
+    HealthBar healthBar;
 
     public GameMap(Games games) {
         this.games = games;
 
         player = new Player("Player", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-        enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3 * 2, Gdx.graphics.getHeight() / 2);
+        enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3 * 2, Gdx.graphics.getHeight() / 2, player);
 
         camera = new OrthographicCamera();
         touchPos = new Vector3();
@@ -38,8 +41,6 @@ public class GameMap extends Stage {
         healthBar = new HealthBar(player.getHitpoints(), player.getX(), player.getY());
         addActor(healthBar);
 
-        enemyHealthBar = new HealthBar(enemy.getHitpoints(), enemy.getX(), enemy.getY());
-        addActor(healthBar);
 
         spriteOne = new Texture("spriteOne.png");
         spriteTwo = new Texture("spriteTwo.png");
@@ -78,19 +79,31 @@ public class GameMap extends Stage {
         if (player.B) {
             player.Move(touchPos.x, touchPos.y);
         }
+        if (player.Attack) {
+            player.Attack(enemy);
+            AttackSkill.attack = false;
+            System.out.println("ENEMY");
+        }
         player.update(enemy);
         enemy.draw(batch);
         enemy.update(player);
         healthBar.draw(batch, 1, player.getX(), player.getY());
-        enemyHealthBar.draw(batch, 1, enemy.getX(), enemy.getY());
         batch.end();
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-        player.B = true;
         touchPos.set(screenX, screenY, 0);
-        return player.B;
+        if (touchPos.x >= enemy.getX() && AttackSkill.attack == true){
+            System.out.println("RRRRRRR");
+                player.Attack = true;
+                player.B = false;
+        }
+        else {
+            player.Attack = false;
+            player.B = true;
+        }
+        return true;
     }
 }

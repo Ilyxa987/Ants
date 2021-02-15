@@ -39,7 +39,6 @@ public class HealthBar extends ProgressBar {
         setAnimateDuration(0);
         setValue(max);
 
-        setAnimateDuration(1);
 
         setPosition(x, y);
     }

@@ -4,25 +4,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygdx.game.GameSc.GameMap;
+import com.mygdx.game.GameSc.HealthBar;
+import com.mygdx.game.ItemsPack.Armor;
 import com.mygdx.game.ItemsPack.Items;
 import com.mygdx.game.ItemsPack.Weapon;
 import com.mygdx.game.SkillsPack.Skills;
 
 
-import java.awt.Rectangle;
 
 public abstract class Units extends Actor {
     public String name;
     public int hitpoints, Speed = 100;
-    public int defence, damage;
     public float x, y, dx, dy;
     public Items items[];
     public Skills skills[];
     public Texture img;
     public final int k = 25;
     public int steps;
-    public boolean B = false;
+    public boolean B = false, Attack = false;
+    public Weapon activeWeapon;
+    public Armor activeArmor;
+    int damage;
+    int defence;
+    public HealthBar healthBar;
 
 
 
@@ -31,6 +35,7 @@ public abstract class Units extends Actor {
         this.name = name;
         this.x = x;
         this.y = y;
+        healthBar = new HealthBar(20, 0, 0);
     }
 
 
@@ -98,6 +103,17 @@ public abstract class Units extends Actor {
         else
             d = this.damage - a.defence;
         a.hitpoints -= d;
+        a.Damage();
+        Attack = false;
+    }
+
+    public void Damage() {
+        if (hitpoints > 0)
+            healthBar.setValue(this.hitpoints);
+        else {
+            healthBar.setValue(0);
+        }
+        System.out.println("IIII");
     }
 
     public void draw(SpriteBatch batch){}

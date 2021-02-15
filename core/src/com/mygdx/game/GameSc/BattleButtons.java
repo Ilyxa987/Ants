@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.MyGame;
+import com.mygdx.game.SkillsPack.AttackSkill;
 import com.mygdx.game.menu.Menu;
 
 public class BattleButtons extends Stage {
@@ -17,6 +17,7 @@ public class BattleButtons extends Stage {
     final Menu menu;
     Texture pauseImage, inventorImage, skillHubImage;
     TextButton pause, inventor, skillHub;
+    AttackSkill attackSkill;
 
     public BattleButtons(final MyGame myGame, final Menu menu) {
         this.myGame = myGame;
@@ -63,6 +64,10 @@ public class BattleButtons extends Stage {
         skillHub = new TextButton("", skillHubStyle);
         skillHub.setPosition(Gdx.graphics.getWidth() / 6, -17);
         addActor(skillHub);
+
+        attackSkill = new AttackSkill("", inventorStyle);
+        attackSkill.setPosition(0, Gdx.graphics.getHeight() / 2);
+        addActor(attackSkill);
 
         pause.addListener(new ChangeListener() {
             @Override

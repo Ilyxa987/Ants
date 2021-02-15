@@ -4,23 +4,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.mygdx.game.GameSc.HealthBar;
+import com.mygdx.game.SkillsPack.AttackSkill;
 
-import java.awt.Rectangle;
 
 
 public class Enemy extends Units {
     Texture img = new Texture("enemy.png");
+    Player player;
 
 
-    public Enemy(String name, float x, float y) {
+    public Enemy(String name, float x, float y, final Player player) {
         super(name, x, y);
-        this.setBounds(x, y, x + 64, y + 64);
-        hitpoints = 20;
+        this.player = player;
+        this.setBounds(x, y, 64, 64);
+        hitpoints = 40;
+        healthBar = new HealthBar(hitpoints, this.x, this.y);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
         batch.draw(img, x, y);
+        healthBar.draw(batch, 1);
     }
 
     @Override
