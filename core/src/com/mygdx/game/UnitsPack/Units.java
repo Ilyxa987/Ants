@@ -12,7 +12,7 @@ import com.mygdx.game.SkillsPack.Skills;
 
 
 
-public abstract class Units extends Actor {
+public abstract class Units extends Actor{
     public String name;
     public int hitpoints, Speed = 100;
     public float x, y, dx, dy;
@@ -27,6 +27,7 @@ public abstract class Units extends Actor {
     int damage;
     int defence;
     public HealthBar healthBar;
+    boolean alive = true;
 
 
 
@@ -96,7 +97,7 @@ public abstract class Units extends Actor {
     }
 
 
-    public void Attack(Units a) {
+    public void attack(Units a) {
         int d;
         if (this.damage - a.defence <= 0)
             d = 0;
@@ -113,9 +114,14 @@ public abstract class Units extends Actor {
         else {
             healthBar.setValue(0);
         }
+        if (hitpoints <= 0) {
+            alive = false;
+        }
         System.out.println("IIII");
     }
 
     public void draw(SpriteBatch batch){}
     public void update(Units units) {}
+
+
 }

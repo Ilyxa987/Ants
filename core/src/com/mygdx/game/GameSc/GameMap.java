@@ -80,7 +80,7 @@ public class GameMap extends Stage {
             player.Move(touchPos.x, touchPos.y);
         }
         if (player.Attack) {
-            player.Attack(enemy);
+            player.attack(enemy);
             AttackSkill.attack = false;
             System.out.println("ENEMY");
         }

@@ -1,6 +1,7 @@
 package com.mygdx.game.UnitsPack;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -25,8 +26,10 @@ public class Enemy extends Units {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(img, x, y);
-        healthBar.draw(batch, 1);
+        if (alive) {
+            batch.draw(img, x, y);
+            healthBar.draw(batch, 1);
+        }
     }
 
     @Override
