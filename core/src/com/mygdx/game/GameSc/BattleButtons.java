@@ -17,23 +17,23 @@ public class BattleButtons extends Stage {
     final Menu menu;
     Texture pauseImage, inventorImage, skillHubImage;
     TextButton pause, inventor, skillHub;
-    AttackSkill attackSkill;
+    //AttackSkill attackSkill;
+    //SkillBar skillBar;
 
     public BattleButtons(final MyGame myGame, final Menu menu) {
         this.myGame = myGame;
-
         this.menu = menu;
 
         pauseImage = new Texture("pause.png");
         inventorImage = new Texture(Gdx.files.internal("inventor .png"));
-        skillHubImage = new Texture("skillbar.png");
+       // skillHubImage = new Texture("skillbar.png");
 
         BitmapFont font = new BitmapFont();
         Skin skin = new Skin();
 
         skin.add("pause", pauseImage);
         skin.add("inventor", inventorImage);
-        skin.add("skillhub", skillHubImage);
+        /*skin.add("skillhub", skillHubImage);*/
 
         TextButton.TextButtonStyle pauseStyle = new TextButton.TextButtonStyle();
         pauseStyle.font = font;
@@ -47,27 +47,27 @@ public class BattleButtons extends Stage {
         inventorStyle.down = skin.getDrawable("inventor");
         inventorStyle.checked = skin.getDrawable("inventor");
 
-        TextButton.TextButtonStyle skillHubStyle = new TextButton.TextButtonStyle();
+        /*TextButton.TextButtonStyle skillHubStyle = new TextButton.TextButtonStyle();
         skillHubStyle.font = font;
         skillHubStyle.up = skin.getDrawable("skillhub");
         skillHubStyle.down = skin.getDrawable("skillhub");
-        skillHubStyle.checked = skin.getDrawable("skillhub");
+        skillHubStyle.checked = skin.getDrawable("skillhub");*/
 
         pause = new TextButton("", pauseStyle);
-        pause.setPosition(1350, 600);
+        pause.setPosition(0.95f*Gdx.graphics.getWidth(), 0.88f*Gdx.graphics.getHeight());
         addActor(pause);
 
         inventor = new TextButton("", inventorStyle);
-        inventor.setPosition(1360, 500);
+        inventor.setPosition(0.955f*Gdx.graphics.getWidth(), 0.805f*Gdx.graphics.getHeight());
         addActor(inventor);
 
-        skillHub = new TextButton("", skillHubStyle);
-        skillHub.setPosition(Gdx.graphics.getWidth() / 6, -17);
-        addActor(skillHub);
+       /*skillHub = new TextButton("", skillHubStyle);
+        skillHub.setPosition(Gdx.graphics.getWidth() / 3.3f, -17);
+        addActor(skillHub);*/
 
-        attackSkill = new AttackSkill("", inventorStyle);
-        attackSkill.setPosition(0, Gdx.graphics.getHeight() / 2);
-        addActor(attackSkill);
+       /* attackSkill = new AttackSkill("", inventorStyle);
+        attackSkill.setPosition(0, Gdx.graphics.getHeight() / );
+        addActor(attackSkill);*/
 
         pause.addListener(new ChangeListener() {
             @Override

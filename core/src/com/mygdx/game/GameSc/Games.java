@@ -20,6 +20,7 @@ public class Games implements Screen {
     GameMap gameMap;
     BattleButtons battleButtons;
     InputMultiplexer inputMultiplexer;
+    SkillBar skillBar;
 
     public Games(MyGame myGame, Menu menu) {
         game = myGame;
@@ -28,6 +29,7 @@ public class Games implements Screen {
         this.gameMap = new GameMap(this);
         battleButtons = new BattleButtons(game, this.menu);
         inputMultiplexer = new InputMultiplexer();
+        skillBar = new SkillBar();
     }
 
     public void show() {
@@ -37,6 +39,7 @@ public class Games implements Screen {
         Gdx.gl.glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
         Gdx.gl.glClear(16384);
         inputMultiplexer.addProcessor(battleButtons);
+        inputMultiplexer.addProcessor(skillBar);
         inputMultiplexer.addProcessor(this.gameMap);
         Gdx.input.setInputProcessor(inputMultiplexer);
         this.camera.update();
@@ -44,6 +47,7 @@ public class Games implements Screen {
         battleButtons.draw();
         this.batch.begin();
         this.batch.end();
+        skillBar.draw();
     }
 
     public void resize(int width, int height) {
