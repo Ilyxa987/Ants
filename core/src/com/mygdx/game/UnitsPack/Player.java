@@ -8,17 +8,17 @@ import com.mygdx.game.ItemsPack.Weapon;
 
 
 public class Player extends Units {
-    Texture img = new Texture("icon.png");
 
 
 
     public Player(String name, float x, float y) {
         super(name, x, y);
         hitpoints = 20;
-        activeWeapon = new Weapon(20);
+        activeWeapon = new Weapon(20, 5);
         activeArmor = new Armor(20);
         damage = activeWeapon.damage;
         defence = activeArmor.defence;
+        img = new Texture("icon.png");
     }
 
     @Override
@@ -40,8 +40,6 @@ public class Player extends Units {
         if (y < 0) {
             y = 0;
         }
-        if (x + 32 >= units.getX() && y >= units.getY() - 32 && y <= units.getY() + 64 && x <= units.getX() + 64)
-            this.Stop();
     }
 }
 

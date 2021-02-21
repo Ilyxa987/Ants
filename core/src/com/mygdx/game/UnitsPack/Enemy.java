@@ -12,7 +12,6 @@ import com.mygdx.game.SkillsPack.AttackSkill;
 
 
 public class Enemy extends Units {
-    Texture img = new Texture("enemy.png");
     Player player;
 
 
@@ -22,6 +21,7 @@ public class Enemy extends Units {
         this.setBounds(x, y, 64, 64);
         hitpoints = 40;
         healthBar = new HealthBar(hitpoints, this.x, this.y);
+        img = new Texture("enemy.png");
     }
 
     @Override
@@ -46,5 +46,8 @@ public class Enemy extends Units {
         if (y < 0) {
             y = 0;
         }
+        if (x + img.getWidth() >= units.getX() && y >= units.getY() - img.getHeight() && y <= units.getY() + units.img.getHeight() && x <= units.getX() + units.img.getWidth()
+        && alive == true)
+            units.Stop();
     }
 }
