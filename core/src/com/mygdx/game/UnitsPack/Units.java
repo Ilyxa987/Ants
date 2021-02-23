@@ -103,8 +103,13 @@ public abstract class Units extends Actor{
             d = 0;
         else
             d = this.damage - a.defence;
-        a.hitpoints -= d;
-        a.Damage();
+        if (a.getX() - (this.getX() + this.img.getWidth()) < this.activeWeapon.radios &&
+                this.getX() - (a.getX() + a.img.getWidth()) < this.activeWeapon.radios &&
+                a.getY() - (this.getY() + this.img.getHeight()) < this.activeWeapon.radios &&
+        this.getY() - (a.getY() + a.img.getHeight()) < this.activeWeapon.radios) {
+            a.hitpoints -= d;
+            a.Damage();
+        }
         Attack = false;
     }
 
