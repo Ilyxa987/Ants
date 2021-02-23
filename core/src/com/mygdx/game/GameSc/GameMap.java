@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.SkillsPack.AttackSkill;
+import com.mygdx.game.SkillsPack.Skills;
 import com.mygdx.game.UnitsPack.Enemy;
 import com.mygdx.game.UnitsPack.Player;
 
@@ -23,12 +24,15 @@ public class GameMap extends Stage {
     Vector3 touchPos;
     OrthographicCamera camera;
     HealthBar healthBar;
+    SkillBar skillBar;
+
 
     public GameMap(Games games) {
         this.games = games;
 
         player = new Player("Player", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
         enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3 * 2, Gdx.graphics.getHeight() / 2, player);
+        skillBar = new SkillBar();
 
         camera = new OrthographicCamera();
         touchPos = new Vector3();

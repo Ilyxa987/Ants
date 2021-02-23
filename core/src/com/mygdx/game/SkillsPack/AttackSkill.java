@@ -1,6 +1,7 @@
 package com.mygdx.game.SkillsPack;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -33,5 +34,11 @@ public class AttackSkill extends Skills {
                 System.out.println("ATTACK");
             }
         });
+    }
+
+
+    public void draw(Batch batch, float parentAlpha, float x, float y) {
+        setPosition(x, y);
+        super.draw(batch, parentAlpha);
     }
 }
