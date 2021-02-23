@@ -54,20 +54,20 @@ public class BattleButtons extends Stage {
         skillHubStyle.checked = skin.getDrawable("skillhub");*/
 
         pause = new TextButton("", pauseStyle);
-        pause.setPosition(0.95f*Gdx.graphics.getWidth(), 0.88f*Gdx.graphics.getHeight());
+        pause.setPosition(0.92f*Gdx.graphics.getWidth(), 0.85f*Gdx.graphics.getHeight());
         addActor(pause);
 
         inventor = new TextButton("", inventorStyle);
-        inventor.setPosition(0.955f*Gdx.graphics.getWidth(), 0.805f*Gdx.graphics.getHeight());
+        inventor.setPosition(0.93f*Gdx.graphics.getWidth(), 0.73f*Gdx.graphics.getHeight());
         addActor(inventor);
 
        /*skillHub = new TextButton("", skillHubStyle);
         skillHub.setPosition(Gdx.graphics.getWidth() / 3.3f, -17);
         addActor(skillHub);*/
 
-       /* attackSkill = new AttackSkill("", inventorStyle);
-        attackSkill.setPosition(0, Gdx.graphics.getHeight() / );
-        addActor(attackSkill);*/
+//        attackSkill = new AttackSkill("", inventorStyle);
+//        attackSkill.setPosition(0, Gdx.graphics.getHeight() / 2);
+//        addActor(attackSkill);
 
         pause.addListener(new ChangeListener() {
             @Override

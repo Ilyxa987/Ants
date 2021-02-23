@@ -14,7 +14,7 @@ import com.mygdx.game.menu.Menu;
 
 public class SkillBar extends Stage {
 
-    Texture skillHubImage;
+    Texture skillHubImage, at;
     TextButton skillHub;
     AttackSkill attackSkill;
     Skills[] skillArray;
@@ -23,11 +23,13 @@ public class SkillBar extends Stage {
     public SkillBar() {
 
         skillHubImage = new Texture("skillbar.png");
+        at = new Texture("Attack.png");
 
         BitmapFont font = new BitmapFont();
         Skin skin = new Skin();
         
         skin.add("skillHub", skillHubImage);
+        skin.add("Attack", at);
         
         TextButton.TextButtonStyle skillHubStyle = new TextButton.TextButtonStyle();
         skillHubStyle.font = font;
@@ -35,30 +37,35 @@ public class SkillBar extends Stage {
         skillHubStyle.down = skin.getDrawable("skillHub");
         skillHubStyle.checked = skin.getDrawable("skillHub");
 
+        TextButton.TextButtonStyle atStyle = new TextButton.TextButtonStyle();
+        atStyle.font = font;
+        atStyle.up = skin.getDrawable("Attack");
+        atStyle.down = skin.getDrawable("Attack");
+        atStyle.checked = skin.getDrawable("Attack");
+
         skillHub = new TextButton("", skillHubStyle);
-        skillHub.setPosition(Gdx.graphics.getWidth()/3.3f, -17);
+        skillHub.setPosition(Gdx.graphics.getWidth()/5, -17);
         addActor(skillHub);
-        skillArray = new Skills[]{attackSkill};
 
-        attackSkill= new AttackSkill("", skillHubStyle);
+        attackSkill= new AttackSkill("", atStyle);
+        skillArray = new Skills[]{attackSkill, null, null, null, null, null, null, null};
 
-
-
-
+        for (int i = 0; i <skillArray.length ; i++) {
+            if (skillArray[i] == attackSkill) {
+                attackSkill.setPosition(skillHub.getX() + 35 + i * 96, skillHub.getY() + 22);
+                addActor(attackSkill);
+            }
+        }
     }
 
     @Override
     public void draw() {
         super.draw();
-        SpriteBatch batch = new SpriteBatch();
-        batch.begin();
         for (int i = 0; i <skillArray.length ; i++) {
-            if (skillArray[i]== attackSkill)
-                attackSkill.draw(batch, 1,
-                        skillHub.getWidth()/8+i*skillHub.getHeight(),
-                        skillHub.getHeight()/10);
-            addActor(attackSkill);
+            if (skillArray[i] == attackSkill) {
+                attackSkill.setPosition(skillHub.getX() + 35 + i * 96, skillHub.getY() + 22);
+                addActor(attackSkill);
+            }
         }
-        batch.end();
     }
 }
