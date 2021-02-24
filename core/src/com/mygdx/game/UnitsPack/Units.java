@@ -21,13 +21,15 @@ public abstract class Units extends Actor{
     public Texture img;
     public final int k = 25;
     public int steps;
-    public boolean B = false, Attack = false;
+    public boolean Move = false, Attack = false;
     public Weapon activeWeapon;
     public Armor activeArmor;
     int damage;
     int defence;
     public HealthBar healthBar;
     boolean alive = true;
+    public int actionPoint;
+    int stepMetr = 0;
 
 
 
@@ -77,40 +79,47 @@ public abstract class Units extends Actor{
     }
 
     public void Move(float x, float y) {
-        y = Gdx.graphics.getHeight() - y;
-        steps = (int) (k * Math.sqrt((x - this.x) * (x - this.x) + (y - this.y) * (y - this.y)) / Speed);
-        dx = (x - this.x) / steps;
-        dy = (y - this.y) / steps;
-        if (this.x == x && this.y == y) {
-            this.Stop();
-        }
-        else {
-            this.x += dx;
-            this.y += dy;
+        if (actionPoint >= 1) {
+            y = Gdx.graphics.getHeight() - y;
+            steps = (int) (k * Math.sqrt((x - this.x) * (x - this.x) + (y - this.y) * (y - this.y)) / Speed);
+            dx = (x - this.x) / steps;
+            dy = (y - this.y) / steps;
+            if (this.x == x && this.y == y) {
+                this.Stop();
+            } else {
+                this.x += dx;
+                this.y += dy;
+                stepMetr++;
+                if (stepMetr % 15 == 0)
+                    actionPoint--;
+            }
         }
     }
 
     public void Stop() {
         this.x += 0;
         this.y += 0;
-        B = false;
+        Move = false;
     }
 
 
     public void attack(Units a) {
-        int d;
-        if (this.damage - a.defence <= 0)
-            d = 0;
-        else
-            d = this.damage - a.defence;
-        if (a.getX() - (this.getX() + this.img.getWidth()) < this.activeWeapon.radios &&
-                this.getX() - (a.getX() + a.img.getWidth()) < this.activeWeapon.radios &&
-                a.getY() - (this.getY() + this.img.getHeight()) < this.activeWeapon.radios &&
-        this.getY() - (a.getY() + a.img.getHeight()) < this.activeWeapon.radios) {
-            a.hitpoints -= d;
-            a.Damage();
+        if (actionPoint >= 2) {
+            int d;
+            if (this.damage - a.defence <= 0)
+                d = 0;
+            else
+                d = this.damage - a.defence;
+            if (a.getX() - (this.getX() + this.img.getWidth()) < this.activeWeapon.radios &&
+                    this.getX() - (a.getX() + a.img.getWidth()) < this.activeWeapon.radios &&
+                    a.getY() - (this.getY() + this.img.getHeight()) < this.activeWeapon.radios &&
+                    this.getY() - (a.getY() + a.img.getHeight()) < this.activeWeapon.radios) {
+                a.hitpoints -= d;
+                a.Damage();
+                actionPoint -= 2;
+            }
+            Attack = false;
         }
-        Attack = false;
     }
 
     public void Damage() {

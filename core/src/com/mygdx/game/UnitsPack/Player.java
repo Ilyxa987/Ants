@@ -19,6 +19,7 @@ public class Player extends Units {
         damage = activeWeapon.damage;
         defence = activeArmor.defence;
         img = new Texture("icon.png");
+        actionPoint = 4;
     }
 
     @Override

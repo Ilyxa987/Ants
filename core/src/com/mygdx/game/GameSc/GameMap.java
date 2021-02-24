@@ -76,7 +76,7 @@ public class GameMap extends Stage {
             x = 0;
         }
         player.draw(batch);
-        if (player.B) {
+        if (player.Move) {
             player.Move(touchPos.x, touchPos.y);
         }
         if (player.Attack) {
@@ -98,11 +98,11 @@ public class GameMap extends Stage {
         if (touchPos.x >= enemy.getX() && AttackSkill.attack == true){
             System.out.println("RRRRRRR");
                 player.Attack = true;
-                player.B = false;
+                player.Move = false;
         }
         else {
             player.Attack = false;
-            player.B = true;
+            player.Move = true;
         }
         return true;
     }
