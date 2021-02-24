@@ -46,5 +46,22 @@ public class Player extends Units {
             y = 0;
         }
     }
+
+    @Override
+    public void actionListener() {
+        if (actionPoint <= 0) {
+            Move = false;
+            stepMetr = 0;
+            if (gameMap.unitsArray.indexOf(this) + 1 < gameMap.unitsArray.size()) {
+                gameMap.activeUnit = gameMap.unitsArray.get(gameMap.unitsArray.indexOf(this) + 1);
+                gameMap.activeUnit.actionPoint = 4;
+                gameMap.activeUnit.Move = true;
+            }
+            else {
+                gameMap.activeUnit = gameMap.unitsArray.get(0);
+                gameMap.activeUnit.actionPoint = 4;
+            }
+        }
+    }
 }
 

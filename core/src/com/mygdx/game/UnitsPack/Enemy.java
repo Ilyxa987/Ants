@@ -62,10 +62,4 @@ public class Enemy extends Units {
         super.attack(a);
         Attack = true;
     }
-
-    @Override
-    public void Stop() {
-        super.Stop();
-        Move = true;
-    }
 }

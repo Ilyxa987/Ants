@@ -144,6 +144,7 @@ public abstract class Units extends Actor{
             if (gameMap.unitsArray.indexOf(this) + 1 < gameMap.unitsArray.size()) {
                 gameMap.activeUnit = gameMap.unitsArray.get(gameMap.unitsArray.indexOf(this) + 1);
                 gameMap.activeUnit.actionPoint = 4;
+                gameMap.activeUnit.Move = true;
             }
             else {
                 gameMap.activeUnit = gameMap.unitsArray.get(0);
@@ -151,6 +152,7 @@ public abstract class Units extends Actor{
             }
         }
     }
+
 
     public void draw(SpriteBatch batch){}
     public void update(Units units) {}
