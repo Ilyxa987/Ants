@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.GameSc.HealthBar;
 import com.mygdx.game.ItemsPack.Armor;
 import com.mygdx.game.ItemsPack.Items;
@@ -30,11 +31,13 @@ public abstract class Units extends Actor{
     boolean alive = true;
     public int actionPoint;
     int stepMetr = 0;
+    GameMap gameMap;
 
 
 
 
-    public Units(String name, float x, float y) {
+    public Units(String name, float x, float y, GameMap gameMap) {
+        this.gameMap = gameMap;
         this.name = name;
         this.x = x;
         this.y = y;
@@ -90,8 +93,8 @@ public abstract class Units extends Actor{
                 this.x += dx;
                 this.y += dy;
                 stepMetr++;
-                if (stepMetr % 15 == 0)
-                    actionPoint--;
+                if (stepMetr % 30 == 0)
+                    actionPoint --;
             }
         }
     }
@@ -130,8 +133,23 @@ public abstract class Units extends Actor{
         }
         if (hitpoints <= 0) {
             alive = false;
+            gameMap.unitsArray.remove(this);
         }
         System.out.println("IIII");
+    }
+
+    public void actionListener() {
+        if (actionPoint <= 0) {
+            stepMetr = 0;
+            if (gameMap.unitsArray.indexOf(this) + 1 < gameMap.unitsArray.size()) {
+                gameMap.activeUnit = gameMap.unitsArray.get(gameMap.unitsArray.indexOf(this) + 1);
+                gameMap.activeUnit.actionPoint = 4;
+            }
+            else {
+                gameMap.activeUnit = gameMap.unitsArray.get(0);
+                gameMap.activeUnit.actionPoint = 4;
+            }
+        }
     }
 
     public void draw(SpriteBatch batch){}

@@ -10,6 +10,9 @@ import com.mygdx.game.SkillsPack.AttackSkill;
 import com.mygdx.game.SkillsPack.Skills;
 import com.mygdx.game.UnitsPack.Enemy;
 import com.mygdx.game.UnitsPack.Player;
+import com.mygdx.game.UnitsPack.Units;
+
+import java.util.ArrayList;
 
 public class GameMap extends Stage {
     int textureSize = 32;
@@ -18,28 +21,30 @@ public class GameMap extends Stage {
     int mapArray[][];
     float height = Gdx.graphics.getHeight(), width = Gdx.graphics.getWidth();
     float x, y;
-    public boolean A = false;
     Player player;
     Enemy enemy;
     Vector3 touchPos;
     OrthographicCamera camera;
-    HealthBar healthBar;
     SkillBar skillBar;
+    public ArrayList<Units> unitsArray;
+    public Units activeUnit;
 
 
     public GameMap(Games games) {
         this.games = games;
 
-        player = new Player("Player", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-        enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3 * 2, Gdx.graphics.getHeight() / 2, player);
+        player = new Player("Player", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, this);
+        enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3 * 2, Gdx.graphics.getHeight() / 2, this, player);
+        unitsArray = new ArrayList<>();
+        unitsArray.add(player);
+        unitsArray.add(enemy);
+        activeUnit = unitsArray.get(0);
+
         skillBar = new SkillBar();
 
         camera = new OrthographicCamera();
         touchPos = new Vector3();
         camera.unproject(touchPos);
-
-        healthBar = new HealthBar(player.getHitpoints(), player.getX(), player.getY());
-        addActor(healthBar);
 
 
         spriteOne = new Texture("spriteOne.png");
@@ -56,6 +61,7 @@ public class GameMap extends Stage {
             }
         }
     }
+
 
     @Override
     public void draw() {
@@ -75,19 +81,31 @@ public class GameMap extends Stage {
             y += textureSize;
             x = 0;
         }
-        player.draw(batch);
-        if (player.Move) {
-            player.Move(touchPos.x, touchPos.y);
+        if (activeUnit.Move) {
+            if (activeUnit == player)
+                activeUnit.Move(touchPos.x, touchPos.y);
+            else
+                activeUnit.Move(player.getX(), Gdx.graphics.getHeight() - player.getY());
         }
-        if (player.Attack) {
-            player.attack(enemy);
-            AttackSkill.attack = false;
-            System.out.println("ENEMY");
+        if (activeUnit.Attack) {
+            if (activeUnit == player) {
+                activeUnit.attack(enemy);
+                AttackSkill.attack = false;
+                System.out.println("ENEMY");
+            }
+            else {
+                if (activeUnit.actionPoint >= 2) {
+                    activeUnit.attack(player);
+                    if (activeUnit.actionPoint <= 1)
+                        activeUnit.actionPoint = 0;
+                }
+            }
         }
-        player.update(enemy);
-        enemy.draw(batch);
-        enemy.update(player);
-        healthBar.draw(batch, 1, player.getX(), player.getY());
+        activeUnit.actionListener();
+        for (int i = 0; i < unitsArray.size(); i++) {
+            unitsArray.get(i).draw(batch);
+            unitsArray.get(i).update(player);
+        }
         batch.end();
     }
 
