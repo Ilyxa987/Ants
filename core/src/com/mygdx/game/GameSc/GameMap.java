@@ -14,6 +14,8 @@ import com.mygdx.game.UnitsPack.Units;
 
 import java.util.ArrayList;
 
+import sun.rmi.runtime.Log;
+
 public class GameMap extends Stage {
     int textureSize = 32;
     Texture spriteOne, spriteTwo;
@@ -99,6 +101,8 @@ public class GameMap extends Stage {
                     if (activeUnit.actionPoint <= 1)
                         activeUnit.actionPoint = 0;
                 }
+                else
+                    activeUnit.actionPoint = 0;
             }
         }
         activeUnit.actionListener();
@@ -107,6 +111,7 @@ public class GameMap extends Stage {
             unitsArray.get(i).update(player);
         }
         batch.end();
+        System.out.println("Move " + activeUnit.Move + " ActiveUnit " + activeUnit + " actionPoint " + activeUnit.actionPoint + " Attack " + activeUnit.Attack);
     }
 
     @Override
