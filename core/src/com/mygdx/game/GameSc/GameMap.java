@@ -111,7 +111,6 @@ public class GameMap extends Stage {
             unitsArray.get(i).update(player);
         }
         batch.end();
-        System.out.println("Move " + activeUnit.Move + " ActiveUnit " + activeUnit + " actionPoint " + activeUnit.actionPoint + " Attack " + activeUnit.Attack);
     }
 
     @Override
