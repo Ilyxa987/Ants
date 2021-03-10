@@ -1,6 +1,8 @@
 package com.mygdx.game.ItemsPack;
 
-public class Weapon {
+import javax.swing.text.Style;
+
+public class Weapon extends Items {
     public int damage;
     public int radios;
 

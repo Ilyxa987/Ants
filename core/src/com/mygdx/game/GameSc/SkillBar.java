@@ -51,8 +51,8 @@ public class SkillBar extends Stage {
         skillArray = new Skills[]{attackSkill, null, null, null, null, null, null, null};
 
         for (int i = 0; i <skillArray.length ; i++) {
-            if (skillArray[i] == attackSkill) {
-                attackSkill.setPosition(skillHub.getX() + 35 + i * 96, skillHub.getY() + 22);
+            if (skillArray[i] != null) {
+                skillArray[i].setPosition(skillHub.getX() + 35 + i * 96, skillHub.getY() + 22);
                 addActor(attackSkill);
             }
         }
