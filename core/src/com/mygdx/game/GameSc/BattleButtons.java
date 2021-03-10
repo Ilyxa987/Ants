@@ -15,14 +15,16 @@ import com.mygdx.game.menu.Menu;
 public class BattleButtons extends Stage {
     final MyGame myGame;
     final Menu menu;
-    Texture pauseImage, inventorImage, skillHubImage;
-    TextButton pause, inventor, skillHub;
+    Texture pauseImage, inventorImage;
+    TextButton pause, inventor;
+    Inventory inventory;
     //AttackSkill attackSkill;
     //SkillBar skillBar;
 
-    public BattleButtons(final MyGame myGame, final Menu menu) {
+    public BattleButtons(final MyGame myGame, final Menu menu, final Inventory inventory) {
         this.myGame = myGame;
         this.menu = menu;
+        this.inventory = inventory;
 
         pauseImage = new Texture("pause.png");
         inventorImage = new Texture(Gdx.files.internal("inventor .png"));
@@ -74,6 +76,17 @@ public class BattleButtons extends Stage {
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("PAUSE");
                    myGame.setScreen(menu);
+            }
+        });
+
+        inventor.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("INVENTORY");
+                if (inventory.inventoryHub.getX() == -1000)
+                    inventory.inventoryHub.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4);
+                else
+                    inventory.inventoryHub.setPosition(-1000, -1000);
             }
         });
     }
