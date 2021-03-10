@@ -8,4 +8,7 @@ public class Armor extends Items {
     }
 
     public int defence;
+
+    public Armor() {
+    }
 }
