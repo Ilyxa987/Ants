@@ -18,8 +18,6 @@ public class BattleButtons extends Stage {
     Texture pauseImage, inventorImage;
     TextButton pause, inventor;
     Inventory inventory;
-    //AttackSkill attackSkill;
-    //SkillBar skillBar;
 
     public BattleButtons(final MyGame myGame, final Menu menu, final Inventory inventory) {
         this.myGame = myGame;
