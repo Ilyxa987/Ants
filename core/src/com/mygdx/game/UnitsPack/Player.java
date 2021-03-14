@@ -4,21 +4,27 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.GameSc.GameMap;
+import com.mygdx.game.GameSc.Games;
 import com.mygdx.game.GameSc.HealthBar;
+import com.mygdx.game.GameSc.Inventory;
 import com.mygdx.game.ItemsPack.Armor;
 import com.mygdx.game.ItemsPack.Weapon;
 
 
 public class Player extends Units {
 
+    Games playerGame;
+    Inventory playerInventory;
 
 
     public Player(String name, float x, float y, GameMap gameMap) {
         super(name, x, y, gameMap);
         hitpoints = 60;
         healthBar = new HealthBar(hitpoints, this.x, this.y);
-        activeWeapon = new Weapon(20, 5);
-        activeArmor = new Armor(10);
+        playerGame = gameMap.getGames();
+        playerInventory = playerGame.getInventory();
+        activeWeapon = (Weapon) playerInventory.getActiveWeapon();
+        activeArmor = (Armor) playerInventory.getActiveArmour();
         damage = activeWeapon.damage;
         defence = activeArmor.defence;
         img = new Texture("icon.png");
@@ -62,6 +68,11 @@ public class Player extends Units {
                 gameMap.activeUnit.actionPoint = 4;
             }
         }
+    }
+
+    public void exchangeActiveItems() {
+        activeWeapon = (Weapon) playerInventory.getActiveWeapon();
+        activeArmor = (Armor) playerInventory.getActiveArmour();
     }
 }
 

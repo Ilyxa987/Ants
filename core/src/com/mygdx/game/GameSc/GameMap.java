@@ -111,6 +111,7 @@ public class GameMap extends Stage {
             unitsArray.get(i).update(player);
         }
         batch.end();
+        player.exchangeActiveItems();
     }
 
     @Override
@@ -127,5 +128,9 @@ public class GameMap extends Stage {
             player.Move = true;
         }
         return true;
+    }
+
+    public Games getGames() {
+        return games;
     }
 }

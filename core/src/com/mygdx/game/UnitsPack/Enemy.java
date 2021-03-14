@@ -2,10 +2,15 @@ package com.mygdx.game.UnitsPack;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.GameSc.HealthBar;
 import com.mygdx.game.ItemsPack.Armor;
+import com.mygdx.game.ItemsPack.BronyaIzTravi;
+import com.mygdx.game.ItemsPack.KamushekMech;
 import com.mygdx.game.ItemsPack.Weapon;
 
 
@@ -15,14 +20,27 @@ public class Enemy extends Units {
 
     public Enemy(String name, float x, float y, GameMap gameMap, final Player player) {
         super(name, x, y, gameMap);
+        Texture fone = new Texture("Fone.png");
+
+        BitmapFont font = new BitmapFont();
+        Skin skin = new Skin();
+
+        skin.add("FONE", fone);
+
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.font = font;
+        textButtonStyle.up = skin.getDrawable("FONE");
+        textButtonStyle.down = skin.getDrawable("FONE");
+        textButtonStyle.checked = skin.getDrawable("FONE");
+
         this.player = player;
         this.setBounds(x, y, 64, 64);
         hitpoints = 40;
         healthBar = new HealthBar(hitpoints, this.x, this.y);
         img = new Texture("enemy.png");
         Move = true;
-        activeWeapon = new Weapon(20, 5);
-        activeArmor = new Armor(10);
+        activeWeapon = new KamushekMech("", textButtonStyle);
+        activeArmor = new BronyaIzTravi(" ", textButtonStyle);
         damage = activeWeapon.damage;
         defence = activeArmor.defence;
         Attack = true;
