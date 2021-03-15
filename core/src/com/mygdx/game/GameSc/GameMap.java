@@ -106,12 +106,12 @@ public class GameMap extends Stage {
             }
         }
         activeUnit.actionListener();
+        player.changeActiveItems();
         for (int i = 0; i < unitsArray.size(); i++) {
             unitsArray.get(i).draw(batch);
             unitsArray.get(i).update(player);
         }
         batch.end();
-        player.exchangeActiveItems();
     }
 
     @Override

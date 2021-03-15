@@ -125,6 +125,7 @@ public abstract class Units extends Actor{
         }
     }
 
+    //Функция получения урона
     public void Damage() {
         if (hitpoints > 0)
             healthBar.setValue(this.hitpoints);
@@ -133,7 +134,7 @@ public abstract class Units extends Actor{
         }
         if (hitpoints <= 0) {
             alive = false;
-            gameMap.unitsArray.remove(this);
+            gameMap.unitsArray.remove(this); //Смерть персонажа
         }
         System.out.println("IIII");
     }

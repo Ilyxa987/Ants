@@ -22,7 +22,7 @@ public class Player extends Units {
         hitpoints = 60;
         healthBar = new HealthBar(hitpoints, this.x, this.y);
         playerGame = gameMap.getGames();
-        playerInventory = playerGame.getInventory();
+        playerInventory = playerGame.getInventory(); //Подключение инвентаря к игроку
         activeWeapon = (Weapon) playerInventory.getActiveWeapon();
         activeArmor = (Armor) playerInventory.getActiveArmour();
         damage = activeWeapon.damage;
@@ -70,7 +70,8 @@ public class Player extends Units {
         }
     }
 
-    public void exchangeActiveItems() {
+    // Замена активных предметов. Не работает
+    public void changeActiveItems() {
         activeWeapon = (Weapon) playerInventory.getActiveWeapon();
         activeArmor = (Armor) playerInventory.getActiveArmour();
     }

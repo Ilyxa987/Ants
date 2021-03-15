@@ -16,14 +16,16 @@ import com.mygdx.game.ItemsPack.Items;
 import com.mygdx.game.ItemsPack.KamushekMech;
 import com.mygdx.game.ItemsPack.Weapon;
 
+import java.util.ArrayList;
+
 
 public class Inventory extends Stage {
-    Items[][] itemsArr;
+    ArrayList<Items> itemsArrayList;
     Items activeWeapon;
     Items activeArmour;
     public TextButton inventoryHub;
     boolean getitem;
-    Items between, zaglushka, zagWeapon, zagArmour;
+    Items between, zaglushka, zagWeapon, zagArmour, item;
 
 
     public Items getActiveWeapon() {
@@ -34,7 +36,7 @@ public class Inventory extends Stage {
         return activeArmour;
     }
 
-    public Inventory(){
+    public Inventory() {
 
         Texture inventoryTexture = new Texture("inventary.png");
         Texture fone = new Texture("Fone.png");
@@ -69,23 +71,41 @@ public class Inventory extends Stage {
         zagArmour = new Armor("", textButtonStyle, 0);
         activeArmour = new BronyaIzTravi("", textButtonStyle);
         activeWeapon = new KamushekMech("", textButtonStyle);
+        item = zaglushka;
 
-        itemsArr = new Items[4][4];
-        for (int i = 0; i < itemsArr.length; i++) {
-            for (int j = 0; j < itemsArr[i].length; j++) {
-                itemsArr[i][j] = zaglushka;
+
+        itemsArrayList = new ArrayList<>(); //Создание массива для предметов
+        for (int i = 0; i < 16; i++) {
+            itemsArrayList.add(new Items("", textButtonStyle));
+            itemsArrayList.get(i).setPosition(inventoryHub.getX() + 50 + 100 * (i % 4), inventoryHub.getY() + 50 + 100 * (i / 4));
+            addActor(itemsArrayList.get(i));
+            //Здесь должна вешаться кликлисенеры, но они не работают
+    }
+
+
+
+
+        item.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("TOUCHSOMETHING");
+                if (!getitem && item != zagWeapon) {
+                    between = item;
+                    item = zaglushka;
+                    getitem = true;
+                } else if (item == zaglushka) {
+                    item = between;
+                    getitem = false;
+                }
             }
-            //TODO нужно повесить лисенер на каждый элемент массива
-        }
+        });
 
-
-
-
+        // Лисенеры для перемещения предметов по инвентарю. Не работают
         activeArmour.setPosition(inventoryHub.getX() + 450, inventoryHub.getY() / 2);
         addActor(activeWeapon);
         activeArmour.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) { //
                 System.out.println("TOUCHARMOUR");
                 if (!getitem && activeArmour != zagArmour) {
                     between = activeArmour;
@@ -126,11 +146,8 @@ public class Inventory extends Stage {
         activeWeapon.setPosition(inventoryHub.getX() + 450, inventoryHub.getY() + 400);
         activeWeapon.draw(batch, 1);
         activeArmour.draw(batch, 1);
-        for (int i = 0; i <itemsArr.length ; i++) {
-            for (int j = 0; j <itemsArr[i].length ; j++) {
-                itemsArr[i][j].setPosition(inventoryHub.getX() + 50 + 100 * i, inventoryHub.getY() + 50 + 100 * j);
-                itemsArr[i][j].draw(batch, 1);
-            }
+        for (int i = 0; i < 16; i++) {
+            itemsArrayList.get(i).setPosition(inventoryHub.getX() + 50 + 100 * (i % 4), inventoryHub.getY() + 50 + 100 * (i / 4));
         }
         batch.end();
     }
