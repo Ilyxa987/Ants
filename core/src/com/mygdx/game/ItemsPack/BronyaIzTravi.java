@@ -9,22 +9,15 @@ public class BronyaIzTravi extends  Armor {
 
     Texture armour;
 
-    public BronyaIzTravi(String text, TextButtonStyle style) {
-        super(text, style);
+    public BronyaIzTravi() {
+        name = "BronyaIzTravi";
         defence = 5;
         armour = new Texture("Armour.png");
+    }
 
-        Skin skin = new Skin();
-        BitmapFont font = new BitmapFont();
-
-        skin.add("armour", armour);
-
-        TextButtonStyle textButtonStyle = new TextButtonStyle();
-        textButtonStyle.up = skin.getDrawable("armour");
-        textButtonStyle.font = font;
-        textButtonStyle.down = skin.getDrawable("armour");
-        textButtonStyle.checked = skin.getDrawable("armour");
-
-        setStyle(textButtonStyle);
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        batch.draw(armour, getX(), getY());
     }
 }

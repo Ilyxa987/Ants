@@ -20,18 +20,6 @@ public class Enemy extends Units {
 
     public Enemy(String name, float x, float y, GameMap gameMap, final Player player) {
         super(name, x, y, gameMap);
-        Texture fone = new Texture("Fone.png");
-
-        BitmapFont font = new BitmapFont();
-        Skin skin = new Skin();
-
-        skin.add("FONE", fone);
-
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = skin.getDrawable("FONE");
-        textButtonStyle.down = skin.getDrawable("FONE");
-        textButtonStyle.checked = skin.getDrawable("FONE");
 
         this.player = player;
         this.setBounds(x, y, 64, 64);
@@ -39,11 +27,12 @@ public class Enemy extends Units {
         healthBar = new HealthBar(hitpoints, this.x, this.y);
         img = new Texture("enemy.png");
         Move = true;
-        activeWeapon = new KamushekMech("", textButtonStyle);
-        activeArmor = new BronyaIzTravi(" ", textButtonStyle);
+        activeWeapon = new KamushekMech();
+        activeArmor = new BronyaIzTravi();
         damage = activeWeapon.damage;
         defence = activeArmor.defence;
         Attack = true;
+        radios = activeWeapon.radios;
     }
 
     @Override

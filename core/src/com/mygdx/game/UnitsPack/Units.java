@@ -31,6 +31,7 @@ public abstract class Units extends Actor{
     boolean alive = true;
     public int actionPoint;
     int stepMetr = 0;
+    int radios;
     GameMap gameMap;
 
 
@@ -113,10 +114,10 @@ public abstract class Units extends Actor{
                 d = 0;
             else
                 d = this.damage - a.defence;
-            if (a.getX() - (this.getX() + this.img.getWidth()) < this.activeWeapon.radios &&
-                    this.getX() - (a.getX() + a.img.getWidth()) < this.activeWeapon.radios &&
-                    a.getY() - (this.getY() + this.img.getHeight()) < this.activeWeapon.radios &&
-                    this.getY() - (a.getY() + a.img.getHeight()) < this.activeWeapon.radios) {
+            if (a.getX() - (this.getX() + this.img.getWidth()) < this.radios &&
+                    this.getX() - (a.getX() + a.img.getWidth()) < this.radios &&
+                    a.getY() - (this.getY() + this.img.getHeight()) < this.radios &&
+                    this.getY() - (a.getY() + a.img.getHeight()) < this.radios) {
                 a.hitpoints -= d;
                 a.Damage();
                 actionPoint -= 2;

@@ -6,8 +6,7 @@ public class Consumables extends Items {
     int quanity;
     void Use(){}
 
-    public Consumables(String text, TextButtonStyle style) {
-        super(text, style);
+    public Consumables() {
         this.quanity = quanity;
     }
 }
