@@ -22,13 +22,14 @@ public class Player extends Units {
         hitpoints = 60;
         healthBar = new HealthBar(hitpoints, this.x, this.y);
         playerGame = gameMap.getGames();
-        playerInventory = playerGame.getInventory();
-        activeWeapon = (Weapon) playerInventory.getActiveWeapon();
-        activeArmor = (Armor) playerInventory.getActiveArmour();
+        playerInventory = playerGame.getInventory(); //Подключение инвентаря к игроку
+        activeWeapon = (Weapon) playerInventory.getWeaponSlot().getWeaponl();
+        activeArmor = (Armor) playerInventory.getArmourSlot().getArmorl();
         damage = activeWeapon.damage;
         defence = activeArmor.defence;
         img = new Texture("icon.png");
         actionPoint = 4;
+        radios = activeWeapon.radios;
     }
 
     @Override
@@ -70,9 +71,17 @@ public class Player extends Units {
         }
     }
 
-    public void exchangeActiveItems() {
-        activeWeapon = (Weapon) playerInventory.getActiveWeapon();
-        activeArmor = (Armor) playerInventory.getActiveArmour();
+    // Замена активных предметов. Не работает
+    public void changeActiveItems() {
+        activeWeapon = (Weapon) playerInventory.getWeaponSlot().getWeaponl();
+        activeArmor = (Armor) playerInventory.getArmourSlot().getArmorl();
+        if (activeWeapon == null) {
+            damage = 1;
+            radios = 1;
+        }
+        if (activeArmor == null) {
+            defence = 0;
+        }
     }
 }
 
