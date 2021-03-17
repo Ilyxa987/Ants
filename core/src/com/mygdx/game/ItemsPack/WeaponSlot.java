@@ -11,16 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.GameSc.Inventory;
 
-public class Slot extends TextButton {
+public class WeaponSlot extends TextButton {
 
-    Items iteml;
+    Weapon weaponl;
     Inventory inventory;
 
-    public Slot(String text, TextButtonStyle style) {
-        super(text, style);
-    }
-
-    public Slot(String text, TextButtonStyle style, final Items item, final Inventory inventory) {
+    public WeaponSlot(String text, TextButtonStyle style, Weapon weapon, final Inventory inventory) {
         super(text, style);
         Pixmap pixmap = new Pixmap(70, 70, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BROWN);
@@ -41,20 +37,20 @@ public class Slot extends TextButton {
 
         setStyle(textButtonStyle);
 
-        this.iteml = item;
+        this.weaponl = weapon;
         this.inventory = inventory;
 
         addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("Touchsome");
-                if (!inventory.getitem && iteml != null) {
-                    inventory.between = iteml;
-                    iteml = null;
+                if (!inventory.getitem && weaponl != null) {
+                    inventory.between = weaponl;
+                    weaponl = null;
                     inventory.getitem = true;
                 }
-                else if (iteml == null && inventory.getitem) {
-                    iteml = inventory.between;
+                else if (weaponl == null && inventory.getitem && Weapon.class.isAssignableFrom(inventory.between.getClass())) {
+                    weaponl = (Weapon) inventory.between;
                     inventory.getitem = false;
                 }
             }
@@ -64,13 +60,13 @@ public class Slot extends TextButton {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (iteml != null) {
-            iteml.setPosition(getX(), getY());
-            iteml.draw(batch, 1);
+        if (weaponl != null) {
+            weaponl.setPosition(getX(), getY());
+            weaponl.draw(batch, 1);
         }
     }
 
-    public Items getIteml() {
-        return iteml;
+    public Weapon getWeaponl() {
+        return weaponl;
     }
 }

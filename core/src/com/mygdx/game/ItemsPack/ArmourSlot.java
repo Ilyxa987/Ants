@@ -11,16 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.GameSc.Inventory;
 
-public class Slot extends TextButton {
+import java.lang.annotation.Annotation;
 
-    Items iteml;
+public class ArmourSlot extends TextButton {
+
+    Armor armorl;
     Inventory inventory;
 
-    public Slot(String text, TextButtonStyle style) {
-        super(text, style);
-    }
-
-    public Slot(String text, TextButtonStyle style, final Items item, final Inventory inventory) {
+    public ArmourSlot(String text, TextButtonStyle style, final Armor armor, final Inventory inventory) {
         super(text, style);
         Pixmap pixmap = new Pixmap(70, 70, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BROWN);
@@ -41,20 +39,20 @@ public class Slot extends TextButton {
 
         setStyle(textButtonStyle);
 
-        this.iteml = item;
+        this.armorl = armor;
         this.inventory = inventory;
 
         addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("Touchsome");
-                if (!inventory.getitem && iteml != null) {
-                    inventory.between = iteml;
-                    iteml = null;
+                if (!inventory.getitem && armorl != null) {
+                    inventory.between = armorl;
+                    armorl = null;
                     inventory.getitem = true;
                 }
-                else if (iteml == null && inventory.getitem) {
-                    iteml = inventory.between;
+                else if (armorl == null && inventory.getitem && Armor.class.isAssignableFrom(inventory.between.getClass())) {
+                    armorl = (Armor) inventory.between;
                     inventory.getitem = false;
                 }
             }
@@ -64,13 +62,13 @@ public class Slot extends TextButton {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (iteml != null) {
-            iteml.setPosition(getX(), getY());
-            iteml.draw(batch, 1);
+        if (armorl != null) {
+            armorl.setPosition(getX(), getY());
+            armorl.draw(batch, 1);
         }
     }
 
-    public Items getIteml() {
-        return iteml;
+    public Armor getArmorl() {
+        return armorl;
     }
 }

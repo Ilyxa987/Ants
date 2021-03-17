@@ -11,11 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.ItemsPack.Armor;
+import com.mygdx.game.ItemsPack.ArmourSlot;
 import com.mygdx.game.ItemsPack.BronyaIzTravi;
 import com.mygdx.game.ItemsPack.Items;
 import com.mygdx.game.ItemsPack.KamushekMech;
 import com.mygdx.game.ItemsPack.Slot;
 import com.mygdx.game.ItemsPack.Weapon;
+import com.mygdx.game.ItemsPack.WeaponSlot;
 
 import java.util.ArrayList;
 
@@ -26,7 +28,8 @@ public class Inventory extends Stage {
     ArrayList<Slot> slotArrayList;
     Items activeWeapon;
     Items activeArmour;
-    Slot armourSlot, weaponSlot;
+    WeaponSlot weaponSlot;
+    ArmourSlot armourSlot;
     public TextButton inventoryHub;
     public boolean getitem;
     public Items between, item;
@@ -79,13 +82,13 @@ public class Inventory extends Stage {
             slotArrayList.get(i).setPosition(inventoryHub.getX() + 50 + 100 * i, inventoryHub.getY() + 50 + 100 * i);
             addActor(slotArrayList.get(i));
     }
-        armourSlot = new Slot("", textButtonStyle, activeArmour, this);
+        armourSlot = new ArmourSlot("", textButtonStyle, (Armor) activeArmour, this);
         armourSlot.setPosition(inventoryHub.getX() + 450, inventoryHub.getY() + 200);
         addActor(armourSlot);
         activeArmour.setPosition(armourSlot.getX(), armourSlot.getY());
         addActor(activeArmour);
 
-        weaponSlot = new Slot("", textButtonStyle, activeWeapon, this);
+        weaponSlot = new WeaponSlot("", textButtonStyle, (Weapon) activeWeapon, this);
         weaponSlot.setPosition(inventoryHub.getX() + 450, inventoryHub.getY() + 400);
         addActor(weaponSlot);
         activeWeapon.setPosition(weaponSlot.getX(), weaponSlot.getY());
@@ -110,11 +113,11 @@ public class Inventory extends Stage {
         batch.end();
     }
 
-    public Slot getArmourSlot() {
+    public ArmourSlot getArmourSlot() {
         return armourSlot;
     }
 
-    public Slot getWeaponSlot() {
+    public WeaponSlot getWeaponSlot() {
         return weaponSlot;
     }
 }
