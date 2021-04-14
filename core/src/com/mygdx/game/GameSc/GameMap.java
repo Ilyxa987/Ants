@@ -75,7 +75,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
             if (activeUnit == player)
                 activeUnit.Move(touchPos.x, touchPos.y);
             else
-                activeUnit.Move(player.getX(), Gdx.graphics.getHeight() - player.getY());
+                activeUnit.Move(player.getX(), player.getY());
         }
         if (activeUnit.Attack) {
             if (activeUnit == player) {
