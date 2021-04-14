@@ -1,5 +1,6 @@
 package com.mygdx.game.GameSc;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.SkillsPack.AttackSkill;
 import com.mygdx.game.UnitsPack.Enemy;
@@ -44,6 +46,7 @@ public class Games implements Screen {
         inputMultiplexer.addProcessor(inventory);
         inputMultiplexer.addProcessor(skillBar);
         inputMultiplexer.addProcessor(this.gameMap);
+        inputMultiplexer.addProcessor(new GestureDetector(1f, 1f, 1f, 1f, gameMap));
         Gdx.input.setInputProcessor(inputMultiplexer);
         this.camera.update();
         this.gameMap.draw();

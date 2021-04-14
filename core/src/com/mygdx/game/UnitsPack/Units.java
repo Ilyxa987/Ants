@@ -84,7 +84,6 @@ public abstract class Units extends Actor{
 
     public void Move(float x, float y) {
         if (actionPoint >= 1) {
-            y = Gdx.graphics.getHeight() - y;
             steps = (int) (k * Math.sqrt((x - this.x) * (x - this.x) + (y - this.y) * (y - this.y)) / Speed);
             dx = (x - this.x) / steps;
             dy = (y - this.y) / steps;

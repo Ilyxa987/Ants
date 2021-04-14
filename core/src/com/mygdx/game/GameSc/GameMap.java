@@ -1,13 +1,17 @@
 package com.mygdx.game.GameSc;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.SkillsPack.AttackSkill;
@@ -17,14 +21,12 @@ import com.mygdx.game.UnitsPack.Player;
 import com.mygdx.game.UnitsPack.Units;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 import sun.rmi.runtime.Log;
 
-public class GameMap extends Stage {
-    int textureSize = 32;
-    Texture spriteOne, spriteTwo;
+public class GameMap extends Stage implements GestureDetector.GestureListener {
     final Games games;
-    float height = Gdx.graphics.getHeight(), width = Gdx.graphics.getWidth();
     Player player;
     Enemy enemy;
     Vector3 touchPos, scroll;
@@ -52,12 +54,12 @@ public class GameMap extends Stage {
         touchPos = new Vector3();
         scroll = new Vector3();
         camera.unproject(touchPos);
-        camera.setToOrtho(false, 1200, 720); // При изменении этого параметра выходит BufferOverFlowException
+        camera.setToOrtho(false, 1280, 720);
         camera.update();
 
         map = new TmxMapLoader().load("mapp.tmx");
 
-        renderer = new OrthoCachedTiledMapRenderer(map);
+        renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
     }
 
 
@@ -100,10 +102,44 @@ public class GameMap extends Stage {
         batch.end();
     }
 
+//    @Override
+//    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+//        System.out.println("Coordinates Camera " + camera.position.x + " " + camera.position.y);
+//        touchPos.set(screenX, screenY, 0);
+//        camera.unproject(touchPos);
+//        if (touchPos.x >= enemy.getX() && AttackSkill.attack == true){
+//            System.out.println("RRRRRRR");
+//            player.Attack = true;
+//            player.Move = false;
+//        }
+//        else {
+//            player.Attack = false;
+//            player.Move = true;
+//        }
+//        return true;
+//    }
+
+//    @Override
+//    public boolean touchDragged(int screenX, int screenY, int pointer) {
+//        if (Gdx.input.getCurrentEventTime() > 20000 * 20) {
+//            touchPos.set(screenX, screenY, 0);
+//            camera.unproject(touchPos);
+//            camera.position.set(Gdx.graphics.getWidth() - screenX, screenY, camera.position.z);
+//            System.out.println("Coordinates Camera " + camera.position.x + " " + camera.position.y);
+//        }
+//        return super.touchDragged(screenX, screenY, pointer);
+//    }
+
+
+    public Games getGames() {
+        return games;
+    }
+
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    public boolean touchDown(float x, float y, int pointer, int button) {
         System.out.println("Coordinates Camera " + camera.position.x + " " + camera.position.y);
-        touchPos.set(screenX, screenY, 0);
+        touchPos.set(x, y, 0);
+        camera.unproject(touchPos);
         if (touchPos.x >= enemy.getX() && AttackSkill.attack == true){
             System.out.println("RRRRRRR");
             player.Attack = true;
@@ -113,18 +149,49 @@ public class GameMap extends Stage {
             player.Attack = false;
             player.Move = true;
         }
-        return true;
+        return false;
     }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        screenX = (int) (screenX + (camera.position.x - 329.11108));
-        screenY = (int) (screenY + ((camera.position.y - 160) / 1048209));
-        camera.position.set(Gdx.graphics.getWidth() - screenX, screenY, camera.position.z);
-        return super.touchDragged(screenX, screenY, pointer);
+    public boolean tap(float x, float y, int count, int button) {
+        return false;
     }
 
-    public Games getGames() {
-        return games;
+    @Override
+    public boolean longPress(float x, float y) {
+        return false;
+    }
+
+    @Override
+    public boolean fling(float velocityX, float velocityY, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        Gdx.app.log("DELTA", deltaX + " " + deltaY);
+        camera.translate(-deltaX * 0.001f, deltaY * 0.001f);
+        camera.update();
+        return false;
+    }
+
+    @Override
+    public boolean panStop(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean zoom(float initialDistance, float distance) {
+        return false;
+    }
+
+    @Override
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        return false;
+    }
+
+    @Override
+    public void pinchStop() {
+
     }
 }
