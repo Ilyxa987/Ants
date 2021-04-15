@@ -1,15 +1,13 @@
 package com.mygdx.game.UnitsPack;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.GameSc.HealthBar;
 import com.mygdx.game.ItemsPack.Armor;
-import com.mygdx.game.ItemsPack.Items;
 import com.mygdx.game.ItemsPack.Weapon;
-import com.mygdx.game.SkillsPack.Skills;
 
 
 
@@ -17,8 +15,6 @@ public abstract class Units extends Actor{
     public String name;
     public int hitpoints, Speed = 100;
     public float x, y, dx, dy;
-    public Items items[];
-    public Skills skills[];
     public Texture img;
     public final int k = 25;
     public int steps;

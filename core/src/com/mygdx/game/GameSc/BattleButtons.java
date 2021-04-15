@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.MyGame;
-import com.mygdx.game.SkillsPack.AttackSkill;
 import com.mygdx.game.menu.Menu;
 
 public class BattleButtons extends Stage {

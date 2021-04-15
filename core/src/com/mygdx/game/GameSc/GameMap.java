@@ -1,12 +1,9 @@
 package com.mygdx.game.GameSc;
 
-import com.badlogic.gdx.ApplicationListener;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -15,15 +12,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.SkillsPack.AttackSkill;
-import com.mygdx.game.SkillsPack.Skills;
 import com.mygdx.game.UnitsPack.Enemy;
 import com.mygdx.game.UnitsPack.Player;
 import com.mygdx.game.UnitsPack.Units;
 
 import java.util.ArrayList;
-import java.util.Timer;
-
-import sun.rmi.runtime.Log;
 
 public class GameMap extends Stage implements GestureDetector.GestureListener {
     final Games games;
