@@ -93,4 +93,13 @@ public class Buttons extends Stage {
             }
         });
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        buttonUpImage.dispose();
+        buttonDownImage.dispose();
+        settingsImage.dispose();
+        exitImage.dispose();
+    }
 }

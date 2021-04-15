@@ -68,4 +68,11 @@ public class SkillBar extends Stage {
             }
         }
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        skillHubImage.dispose();
+        at.dispose();
+    }
 }
