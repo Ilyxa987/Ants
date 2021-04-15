@@ -34,15 +34,6 @@ public class Inventory extends Stage {
     public boolean getitem;
     public Items between, item;
 
-
-    public Items getActiveWeapon() {
-        return activeWeapon;
-    }
-
-    public Items getActiveArmour() {
-        return activeArmour;
-    }
-
     public Inventory() {
 
         Texture inventoryTexture = new Texture("inventary.png");
