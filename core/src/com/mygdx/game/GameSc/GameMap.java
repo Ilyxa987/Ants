@@ -147,6 +147,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         }
         else {
             player.Attack = false;
+            if (!BattleButtons.cameraMove)
             player.Move = true;
         }
         return false;
@@ -170,8 +171,10 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         Gdx.app.log("DELTA", deltaX + " " + deltaY);
-        camera.translate(-deltaX * 0.001f, deltaY * 0.001f);
-        camera.update();
+        if (BattleButtons.cameraMove) {
+            camera.translate(-deltaX * 0.001f, deltaY * 0.001f);
+            camera.update();
+        }
         return false;
     }
 

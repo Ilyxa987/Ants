@@ -15,9 +15,10 @@ import com.mygdx.game.menu.Menu;
 public class BattleButtons extends Stage {
     final MyGame myGame;
     final Menu menu;
-    Texture pauseImage, inventorImage;
-    TextButton pause, inventor;
+    Texture pauseImage, inventorImage, cameraImage;
+    TextButton pause, inventor, cameraButton;
     Inventory inventory;
+    public static boolean cameraMove = false;
 
     public BattleButtons(final MyGame myGame, final Menu menu, final Inventory inventory) {
         this.myGame = myGame;
@@ -26,6 +27,7 @@ public class BattleButtons extends Stage {
 
         pauseImage = new Texture("pause.png");
         inventorImage = new Texture(Gdx.files.internal("inventor .png"));
+        cameraImage = new Texture(Gdx.files.internal("cameraimage.png"));
        // skillHubImage = new Texture("skillbar.png");
 
         BitmapFont font = new BitmapFont();
@@ -33,6 +35,7 @@ public class BattleButtons extends Stage {
 
         skin.add("pause", pauseImage);
         skin.add("inventor", inventorImage);
+        skin.add("camera", cameraImage);
         /*skin.add("skillhub", skillHubImage);*/
 
         TextButton.TextButtonStyle pauseStyle = new TextButton.TextButtonStyle();
@@ -47,6 +50,11 @@ public class BattleButtons extends Stage {
         inventorStyle.down = skin.getDrawable("inventor");
         inventorStyle.checked = skin.getDrawable("inventor");
 
+        TextButton.TextButtonStyle cameraStyle = new TextButton.TextButtonStyle();
+        cameraStyle.font = font;
+        cameraStyle.up = skin.getDrawable("camera");
+        cameraStyle.down = skin.getDrawable("camera");
+        cameraStyle.checked = skin.getDrawable("camera");
         /*TextButton.TextButtonStyle skillHubStyle = new TextButton.TextButtonStyle();
         skillHubStyle.font = font;
         skillHubStyle.up = skin.getDrawable("skillhub");
@@ -61,6 +69,9 @@ public class BattleButtons extends Stage {
         inventor.setPosition(0.93f*Gdx.graphics.getWidth(), 0.73f*Gdx.graphics.getHeight());
         addActor(inventor);
 
+        cameraButton = new TextButton("", cameraStyle);
+        cameraButton.setPosition(0.92f*Gdx.graphics.getWidth(), 0.63f*Gdx.graphics.getHeight());
+        addActor(cameraButton);
        /*skillHub = new TextButton("", skillHubStyle);
         skillHub.setPosition(Gdx.graphics.getWidth() / 3.3f, -17);
         addActor(skillHub);*/
@@ -85,6 +96,13 @@ public class BattleButtons extends Stage {
                     inventory.inventoryHub.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4);
                 else
                     inventory.inventoryHub.setPosition(-1000, -1000);
+            }
+        });
+
+        cameraButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                     cameraMove = true;
             }
         });
     }
