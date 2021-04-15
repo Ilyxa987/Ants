@@ -47,7 +47,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         touchPos = new Vector3();
         scroll = new Vector3();
         camera.unproject(touchPos);
-        camera.setToOrtho(false, 1280, 720);
+        camera.setToOrtho(false, 1560, 720);
         camera.update();
 
         map = new TmxMapLoader().load("mapp.tmx");

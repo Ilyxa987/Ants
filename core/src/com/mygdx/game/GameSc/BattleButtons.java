@@ -49,7 +49,7 @@ public class BattleButtons extends Stage {
         inventorStyle.down = skin.getDrawable("inventor");
         inventorStyle.checked = skin.getDrawable("inventor");
 
-        TextButton.TextButtonStyle cameraStyle = new TextButton.TextButtonStyle();
+        final TextButton.TextButtonStyle cameraStyle = new TextButton.TextButtonStyle();
         cameraStyle.font = font;
         cameraStyle.up = skin.getDrawable("camera");
         cameraStyle.down = skin.getDrawable("camera");
@@ -101,7 +101,10 @@ public class BattleButtons extends Stage {
         cameraButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if (!cameraMove)
                      cameraMove = true;
+                else
+                    cameraMove = false;
             }
         });
     }
