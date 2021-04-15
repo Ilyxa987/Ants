@@ -79,5 +79,6 @@ public class Menu implements Screen {
     public void dispose() {
         batch.dispose();
         bgImage.dispose();
+        buttons.dispose();
     }
 }

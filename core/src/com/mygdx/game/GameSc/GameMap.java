@@ -24,7 +24,6 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     Enemy enemy;
     Vector3 touchPos, scroll;
     OrthographicCamera camera;
-    SkillBar skillBar;
     public ArrayList<Units> unitsArray;
     public Units activeUnit;
     TiledMap map;
@@ -41,7 +40,6 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         unitsArray.add(enemy);
         activeUnit = unitsArray.get(0);
 
-        skillBar = new SkillBar();
 
         camera = new OrthographicCamera();
         touchPos = new Vector3();
@@ -189,5 +187,12 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     @Override
     public void pinchStop() {
 
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        map.dispose();
+        renderer.dispose();
     }
 }

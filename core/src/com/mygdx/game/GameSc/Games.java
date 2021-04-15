@@ -66,6 +66,9 @@ public class Games implements Screen {
 
     public void dispose() {
         this.batch.dispose();
+        gameMap.dispose();
+        skillBar.dispose();
+        inventory.dispose();
     }
 
     public Inventory getInventory() {
