@@ -16,10 +16,6 @@ public class Slot extends TextButton {
     Items iteml;
     Inventory inventory;
 
-    public Slot(String text, TextButtonStyle style) {
-        super(text, style);
-    }
-
     public Slot(String text, TextButtonStyle style, final Items item, final Inventory inventory) {
         super(text, style);
         Pixmap pixmap = new Pixmap(70, 70, Pixmap.Format.RGBA8888);
@@ -53,7 +49,7 @@ public class Slot extends TextButton {
                     iteml = null;
                     inventory.getitem = true;
                 }
-                else if (iteml == null && inventory.getitem) {
+                else if (iteml == null) {
                     iteml = inventory.between;
                     inventory.getitem = false;
                 }

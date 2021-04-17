@@ -3,6 +3,7 @@ package com.mygdx.game.UnitsPack;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.GameSc.HealthBar;
@@ -15,7 +16,7 @@ public abstract class Units extends Actor{
     public String name;
     public int hitpoints, Speed = 100;
     public float x, y, dx, dy;
-    public Texture img;
+    public TextureRegion img;
     public final int k = 25;
     public int steps;
     public boolean Move = false, Attack = false;
@@ -109,10 +110,10 @@ public abstract class Units extends Actor{
                 d = 0;
             else
                 d = this.damage - a.defence;
-            if (a.getX() - (this.getX() + this.img.getWidth()) < this.radios &&
-                    this.getX() - (a.getX() + a.img.getWidth()) < this.radios &&
-                    a.getY() - (this.getY() + this.img.getHeight()) < this.radios &&
-                    this.getY() - (a.getY() + a.img.getHeight()) < this.radios) {
+            if (actionPoint>=2/*a.getX() - this.getX() - this.img.getTexture().getWidth()< this.radios &&
+                    this.getX() - a.getX() - a.img.getTexture().getWidth() < this.radios &&
+                    a.getY() - this.getY() - this.img.getTexture().getHeight() < this.radios &&
+                    this.getY() - a.getY() - a.img.getTexture().getHeight() < this.radios*/) {
                 a.hitpoints -= d;
                 a.Damage();
                 actionPoint -= 2;
@@ -152,7 +153,16 @@ public abstract class Units extends Actor{
 
 
     public void draw(SpriteBatch batch){}
-    public void update(Units units) {}
+    public void update(Units units) {
+        if (x + img.getTexture().getWidth() >= units.getX()
+                && y >= units.getY() - img.getTexture().getHeight()
+                && y <= units.getY() + units.img.getTexture().getHeight()
+                && x <= units.getX() + units.img.getTexture().getWidth()
+                && alive == true) {
+            units.Stop();
+            Stop();
+        }
+    }
 
 
 }

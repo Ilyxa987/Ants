@@ -87,11 +87,11 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         activeUnit.actionListener();
         player.changeActiveItems();
         for (int i = 0; i < unitsArray.size(); i++) {
-            unitsArray.get(i).draw(batch);
             unitsArray.get(i).update(player);
+            unitsArray.get(i).draw(batch);
         }
         batch.end();
-        player.exchangeActiveItems();
+        //player.exchangeActiveItems();
     }
 
 //    @Override
