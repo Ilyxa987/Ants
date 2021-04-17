@@ -166,6 +166,14 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         if (BattleButtons.cameraMove) {
             camera.translate(-deltaX * 0.001f, deltaY * 0.001f);
             camera.update();
+            if (camera.position.x < camera.viewportWidth / 2)
+                camera.position.set(camera.viewportWidth / 2, camera.position.y, camera.position.z);
+            if (camera.position.y < camera.viewportHeight / 2)
+                camera.position.set(camera.position.x, camera.viewportHeight / 2, camera.position.z);
+            if (camera.position.y > camera.viewportHeight * 2 - 200)
+                camera.position.set(camera.position.x, camera.viewportHeight * 2 - 200, camera.position.z);
+            if (camera.position.x > camera.viewportWidth / 2 + 50)
+                camera.position.set(camera.viewportWidth / 2 + 50, camera.position.y, camera.position.z);
         }
         return false;
     }
