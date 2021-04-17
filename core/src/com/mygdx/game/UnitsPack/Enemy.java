@@ -43,8 +43,8 @@ public class Enemy extends Units {
         defence = activeArmor.defence;
         Attack = true;
         radios = activeWeapon.radios;
-        animll = new Texture("Left2.png");
-        animrr = new Texture("Right2.png");
+        animll = new Texture("anLeftE.png");
+        animrr = new Texture("anRightE.png");
         TextureRegion[][] tmpR = TextureRegion.split(animrr, animrr.getWidth()/2, animrr.getHeight()/2); // #10
         walkR = new TextureRegion[FRAME_COLS*FRAME_ROWS];
         int index = 0;
