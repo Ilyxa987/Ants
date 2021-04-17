@@ -110,10 +110,10 @@ public abstract class Units extends Actor{
                 d = 0;
             else
                 d = this.damage - a.defence;
-            if (actionPoint>=2/*a.getX() - this.getX() - this.img.getTexture().getWidth()< this.radios &&
-                    this.getX() - a.getX() - a.img.getTexture().getWidth() < this.radios &&
-                    a.getY() - this.getY() - this.img.getTexture().getHeight() < this.radios &&
-                    this.getY() - a.getY() - a.img.getTexture().getHeight() < this.radios*/) {
+            if (/*actionPoint>=2*/a.getX() - this.getX() /*- this.img.getTexture().getWidth()*/< this.radios &&
+                    this.getX() - a.getX() /*- a.img.getTexture().getWidth()*/ < this.radios &&
+                    a.getY() - this.getY() /*- this.img.getTexture().getHeight()*/ < this.radios &&
+                    this.getY() - a.getY() /*- a.img.getTexture().getHeight()*/ < this.radios) {
                 a.hitpoints -= d;
                 a.Damage();
                 actionPoint -= 2;
