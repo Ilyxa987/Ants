@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.GameSc.Games;
 import com.mygdx.game.GameSc.HealthBar;
@@ -60,7 +63,6 @@ public class Player extends Units {
         }
         lWalk = new Animation(0.25f, walkL);
         stateTime = 0f;
-        SpriteBatch batch = new SpriteBatch();
     }
 
 
@@ -68,7 +70,7 @@ public class Player extends Units {
             public void draw (SpriteBatch batch){
                 //batch.draw(img, x, y);
                 //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-                TextureRegion img = (TextureRegion) rWalk.getKeyFrame(stateTime, true); // #16
+                img = (TextureRegion) rWalk.getKeyFrame(stateTime, true); // #16
                 batch.draw(img, x, y); // #17
                 healthBar.draw(batch, 1, x, y);
             }
@@ -89,7 +91,6 @@ public class Player extends Units {
                 if (y < 0) {
                     y = 0;
                 }
-
             }
 
 

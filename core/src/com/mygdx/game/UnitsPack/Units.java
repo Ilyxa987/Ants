@@ -4,6 +4,9 @@ package com.mygdx.game.UnitsPack;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.GameSc.HealthBar;
@@ -30,6 +33,7 @@ public abstract class Units extends Actor{
     int stepMetr = 0;
     int radios;
     GameMap gameMap;
+    Rectangle rectangle;
 
 
 
@@ -40,6 +44,7 @@ public abstract class Units extends Actor{
         this.x = x;
         this.y = y;
         healthBar = new HealthBar(20, 0, 0);
+        rectangle = new Rectangle(x, y, 64, 98);
     }
 
 
@@ -110,10 +115,10 @@ public abstract class Units extends Actor{
                 d = 0;
             else
                 d = this.damage - a.defence;
-            if (/*actionPoint>=2*/a.getX() - this.getX() /*- this.img.getTexture().getWidth()*/< this.radios &&
-                    this.getX() - a.getX() /*- a.img.getTexture().getWidth()*/ < this.radios &&
-                    a.getY() - this.getY() /*- this.img.getTexture().getHeight()*/ < this.radios &&
-                    this.getY() - a.getY() /*- a.img.getTexture().getHeight()*/ < this.radios) {
+            if (a.getX() - this.getX() +64 < this.radios && a.getX() - this.getX() +64 >= 0 ||
+                    this.getX() - a.getX() + 64 < this.radios && this.getX() - a.getX() + 64 >= 0 ||
+                    a.getY() - this.getY() + 98 < this.radios && a.getY() - this.getY() + 98 >= 0 ||
+                    this.getY() - a.getY() + 98 < this.radios && this.getY() - a.getY() + 98 >= 0) {
                 a.hitpoints -= d;
                 a.Damage();
                 actionPoint -= 2;
@@ -154,15 +159,22 @@ public abstract class Units extends Actor{
 
     public void draw(SpriteBatch batch){}
     public void update(Units units) {
-        if (x + img.getTexture().getWidth() >= units.getX()
-                && y >= units.getY() - img.getTexture().getHeight()
-                && y <= units.getY() + units.img.getTexture().getHeight()
-                && x <= units.getX() + units.img.getTexture().getWidth()
+        if (x + 64 >= units.getX()
+                && y >= units.getY() - 98
+                && y <= units.getY() + 98
+                && x <= units.getX() + 64
                 && alive == true) {
             units.Stop();
             Stop();
         }
+//        for (RectangleMapObject rectangleMapObject: gameMap.mapObjects.getByType(RectangleMapObject.class)) {
+//            Rectangle rectangle = rectangleMapObject.getRectangle();
+//            if (Intersector.overlaps(rectangle, this.getRectangle()))
+//                Stop();
+//        }
     }
 
-
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
 }

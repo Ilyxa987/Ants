@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.GameSc.GameMap;
@@ -26,6 +27,7 @@ public class Enemy extends Units {
     Animation rWalk, lWalk;
     float stateTime;
     TextureRegion img;
+    Rectangle rectangle;
 
 
     public Enemy(String name, float x, float y, GameMap gameMap, final Player player) {
@@ -64,12 +66,12 @@ public class Enemy extends Units {
         }
         lWalk = new Animation(0.25f, walkL);
         stateTime = 0f;
-        SpriteBatch batch = new SpriteBatch();
+        rectangle = new Rectangle(x, y, 64, 98);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        TextureRegion img = (TextureRegion) lWalk.getKeyFrame(stateTime, true);// #16
+        img = (TextureRegion) lWalk.getKeyFrame(stateTime, true);// #16
         if (alive) {
             batch.draw(img, x, y);
             healthBar.draw(batch, 1, x, y);
@@ -96,12 +98,16 @@ public class Enemy extends Units {
         if (y < 0) {
             y = 0;
         }
-
+        super.update(units);
     }
 
     @Override
     public void attack(Units a) {
         super.attack(a);
         Attack = true;
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 }
