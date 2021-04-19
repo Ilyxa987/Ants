@@ -15,6 +15,8 @@ import com.mygdx.game.ItemsPack.BronyaIzTravi;
 import com.mygdx.game.ItemsPack.KamushekMech;
 import com.mygdx.game.ItemsPack.Weapon;
 
+import java.awt.Rectangle;
+
 
 public class Enemy extends Units {
 
@@ -22,10 +24,11 @@ public class Enemy extends Units {
     private static final int FRAME_ROWS = 2;
     Player player;
     Texture animll, animrr;
-    TextureRegion[] walkL,walkR;
+    TextureRegion[] walkL, walkR;
     Animation rWalk, lWalk;
     float stateTime;
-    TextureRegion img;
+    TextureRegion img, currentFrame;
+    Texture png;
 
 
     public Enemy(String name, float x, float y, GameMap gameMap, final Player player) {
@@ -36,6 +39,7 @@ public class Enemy extends Units {
         hitpoints = 40;
         healthBar = new HealthBar(hitpoints, this.x, this.y);
         img = new TextureRegion();
+        img = currentFrame;
         Move = true;
         activeWeapon = new KamushekMech();
         activeArmor = new BronyaIzTravi();
@@ -45,8 +49,8 @@ public class Enemy extends Units {
         radios = activeWeapon.radios;
         animll = new Texture("anLeftE.png");
         animrr = new Texture("anRightE.png");
-        TextureRegion[][] tmpR = TextureRegion.split(animrr, animrr.getWidth()/2, animrr.getHeight()/2); // #10
-        walkR = new TextureRegion[FRAME_COLS*FRAME_ROWS];
+        TextureRegion[][] tmpR = TextureRegion.split(animrr, animrr.getWidth() / 2, animrr.getHeight() / 2); // #10
+        walkR = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;
         for (int i = 0; i < FRAME_ROWS; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
@@ -54,8 +58,8 @@ public class Enemy extends Units {
             }
         }
         rWalk = new Animation(0.025f, walkR);
-        TextureRegion[][] tmpL = TextureRegion.split(animll, animll.getWidth()/2, animll.getHeight()/2); // #10
-        walkL = new TextureRegion[FRAME_COLS*FRAME_ROWS];
+        TextureRegion[][] tmpL = TextureRegion.split(animll, animll.getWidth() / 2, animll.getHeight() / 2); // #10
+        walkL = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index1 = 0;
         for (int i = 0; i < FRAME_ROWS; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
@@ -67,9 +71,21 @@ public class Enemy extends Units {
         SpriteBatch batch = new SpriteBatch();
     }
 
+
     @Override
     public void draw(SpriteBatch batch) {
-        TextureRegion img = (TextureRegion) lWalk.getKeyFrame(stateTime, true);// #16
+        stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = (TextureRegion) lWalk.getKeyFrame(stateTime, true);
+        img = currentFrame;// #16
+        if (this.dx>=0){
+            lWalk = new Animation(0.3f, walkR);
+        }
+        if (this.dx<0){
+            lWalk = new Animation(0.3f, walkL);
+        }
+        if (Move==false){
+            lWalk = new Animation(0.3f, walkR);
+        }
         if (alive) {
             batch.draw(img, x, y);
             healthBar.draw(batch, 1, x, y);
@@ -81,9 +97,6 @@ public class Enemy extends Units {
 
     @Override
     public void update(Units units) {
-        stateTime += Gdx.graphics.getDeltaTime(); // #15
-        lWalk = new Animation(0.3f, walkL);
-
         if (x + 64 > Gdx.graphics.getWidth()) {
             x = Gdx.graphics.getWidth() - 64;
         }
@@ -96,12 +109,30 @@ public class Enemy extends Units {
         if (y < 0) {
             y = 0;
         }
-
+        /*if (x + img.getRegionWidth() >= units.getX()
+                && y >= units.getY() - img.getRegionHeight()
+                && y <= units.getY() + units.img.getRegionHeight()
+                && x <= units.getX() + units.img.getRegionWidth()
+                && alive == true) {
+            units.Stop();
+            Stop();
+        }*/
+        if (x + animll.getWidth()/FRAME_COLS >= units.getX()
+                && y >= units.getY() - animll.getHeight()/FRAME_ROWS
+                && y <= units.getY() + units.animll.getHeight()/FRAME_ROWS
+                && x <= units.getX() + units.animll.getWidth()/FRAME_COLS
+                && alive == true) {
+            units.Stop();
+            Stop();
+        }
     }
 
-    @Override
-    public void attack(Units a) {
-        super.attack(a);
-        Attack = true;
-    }
+        @Override
+        public void attack (Units a){
+            super.attack(a);
+            Attack = true;
+        }
+
+
 }
+

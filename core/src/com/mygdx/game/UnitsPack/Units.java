@@ -10,6 +10,7 @@ import com.mygdx.game.GameSc.HealthBar;
 import com.mygdx.game.ItemsPack.Armor;
 import com.mygdx.game.ItemsPack.Weapon;
 
+import java.awt.Rectangle;
 
 
 public abstract class Units extends Actor{
@@ -17,6 +18,7 @@ public abstract class Units extends Actor{
     public int hitpoints, Speed = 100;
     public float x, y, dx, dy;
     public TextureRegion img;
+    public Texture animll, animrr;
     public final int k = 25;
     public int steps;
     public boolean Move = false, Attack = false;
@@ -40,6 +42,8 @@ public abstract class Units extends Actor{
         this.x = x;
         this.y = y;
         healthBar = new HealthBar(20, 0, 0);
+        animll = new Texture("anLeftE.png");
+        animrr = new Texture("anRightE.png");
     }
 
 
@@ -110,10 +114,10 @@ public abstract class Units extends Actor{
                 d = 0;
             else
                 d = this.damage - a.defence;
-            if (/*actionPoint>=2*/a.getX() - this.getX() /*- this.img.getTexture().getWidth()*/< this.radios &&
-                    this.getX() - a.getX() /*- a.img.getTexture().getWidth()*/ < this.radios &&
-                    a.getY() - this.getY() /*- this.img.getTexture().getHeight()*/ < this.radios &&
-                    this.getY() - a.getY() /*- a.img.getTexture().getHeight()*/ < this.radios) {
+            if (/*actionPoint>=2*/a.getX() - this.getX() - this.animll.getWidth()< this.radios &&
+                    this.getX() - a.getX() - a.animll.getWidth() < this.radios &&
+                    a.getY() - this.getY() - this.animll.getHeight() < this.radios &&
+                    this.getY() - a.getY() - a.animll.getHeight() < this.radios) {
                 a.hitpoints -= d;
                 a.Damage();
                 actionPoint -= 2;
@@ -154,15 +158,6 @@ public abstract class Units extends Actor{
 
     public void draw(SpriteBatch batch){}
     public void update(Units units) {
-        if (x + img.getTexture().getWidth() >= units.getX()
-                && y >= units.getY() - img.getTexture().getHeight()
-                && y <= units.getY() + units.img.getTexture().getHeight()
-                && x <= units.getX() + units.img.getTexture().getWidth()
-                && alive == true) {
-            units.Stop();
-            Stop();
+
         }
     }
-
-
-}
