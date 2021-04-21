@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.GameSc.Games;
 import com.mygdx.game.GameSc.HealthBar;
@@ -13,7 +16,6 @@ import com.mygdx.game.GameSc.Inventory;
 import com.mygdx.game.ItemsPack.Armor;
 import com.mygdx.game.ItemsPack.Weapon;
 
-import java.awt.Rectangle;
 
 
 public class Player extends Units {
@@ -64,7 +66,6 @@ public class Player extends Units {
         }
         lWalk = new Animation(0.25f, walkL);
         stateTime = 0f;
-        SpriteBatch batch = new SpriteBatch();
     }
 
 
@@ -102,7 +103,6 @@ public class Player extends Units {
                 if (y < 0) {
                     y = 0;
                 }
-
             }
 
 

@@ -10,7 +10,6 @@ import com.mygdx.game.GameSc.HealthBar;
 import com.mygdx.game.ItemsPack.Armor;
 import com.mygdx.game.ItemsPack.Weapon;
 
-import java.awt.Rectangle;
 
 
 public abstract class Units extends Actor{
@@ -114,10 +113,10 @@ public abstract class Units extends Actor{
                 d = 0;
             else
                 d = this.damage - a.defence;
-            if (/*actionPoint>=2*/a.getX() - this.getX() - this.animll.getWidth()< this.radios &&
-                    this.getX() - a.getX() - a.animll.getWidth() < this.radios &&
-                    a.getY() - this.getY() - this.animll.getHeight() < this.radios &&
-                    this.getY() - a.getY() - a.animll.getHeight() < this.radios) {
+            if (a.getX() - this.getX() - this.animll.getWidth()/2< this.radios &&
+                    this.getX() - a.getX() - a.animll.getWidth()/2 < this.radios &&
+                    a.getY() - this.getY() - this.animll.getHeight()/2 < this.radios &&
+                    this.getY() - a.getY() - a.animll.getHeight()/2 < this.radios) {
                 a.hitpoints -= d;
                 a.Damage();
                 actionPoint -= 2;
@@ -158,6 +157,5 @@ public abstract class Units extends Actor{
 
     public void draw(SpriteBatch batch){}
     public void update(Units units) {
-
-        }
+    }
     }

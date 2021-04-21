@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.SkillsPack.AttackSkill;
+import com.mygdx.game.SkillsPack.FireBall;
 import com.mygdx.game.SkillsPack.Skills;
 import com.mygdx.game.menu.Menu;
 
@@ -17,6 +18,7 @@ public class SkillBar extends Stage {
     Texture skillHubImage, at;
     TextButton skillHub;
     AttackSkill attackSkill;
+    FireBall fireBall;
     Skills[] skillArray;
 
 
@@ -48,12 +50,13 @@ public class SkillBar extends Stage {
         addActor(skillHub);
 
         attackSkill= new AttackSkill("", atStyle);
-        skillArray = new Skills[]{attackSkill, null, null, null, null, null, null, null};
+        fireBall = new FireBall("", atStyle);
+        skillArray = new Skills[]{attackSkill, fireBall, null, null, null, null, null, null};
 
         for (int i = 0; i <skillArray.length ; i++) {
             if (skillArray[i] != null) {
                 skillArray[i].setPosition(skillHub.getX() + 35 + i * 96, skillHub.getY() + 22);
-                addActor(attackSkill);
+                addActor(skillArray[i]);
             }
         }
     }
@@ -61,12 +64,6 @@ public class SkillBar extends Stage {
     @Override
     public void draw() {
         super.draw();
-        for (int i = 0; i <skillArray.length ; i++) {
-            if (skillArray[i] == attackSkill) {
-                attackSkill.setPosition(skillHub.getX() + 35 + i * 96, skillHub.getY() + 22);
-                addActor(attackSkill);
-            }
-        }
     }
 
     @Override
