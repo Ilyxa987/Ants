@@ -51,6 +51,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         unitsArray.add(enemy);
         activeUnit = unitsArray.get(0);
         itemsArrayList = new ArrayList<>();
+        fireEffects = new ArrayList<>();
 
 
         camera = new OrthographicCamera();
@@ -167,7 +168,6 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
             player.Move = false;
         }
         else if (FireBall.Fire && activeUnit == player && activeUnit.actionPoint >= 2) {
-            fireEffects = new ArrayList<>();
             for (int i = 0; i < 1; i++) {
                 if (i % 4 == 0)
                     j = i / 4;
