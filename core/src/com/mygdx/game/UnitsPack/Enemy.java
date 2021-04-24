@@ -85,19 +85,6 @@ public class Enemy extends Units {
     public void update(Units units) {
         stateTime += Gdx.graphics.getDeltaTime(); // #15
         lWalk = new Animation(0.3f, walkL);
-
-        if (x + 64 > Gdx.graphics.getWidth()) {
-            x = Gdx.graphics.getWidth() - 64;
-        }
-        if (x < 0) {
-            x = 0;
-        }
-        if (y + 64 > Gdx.graphics.getHeight()) {
-            y = Gdx.graphics.getHeight() - 64;
-        }
-        if (y < 0) {
-            y = 0;
-        }
         super.update(units);
     }
 

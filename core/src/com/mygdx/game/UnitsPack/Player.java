@@ -91,18 +91,6 @@ public class Player extends Units {
                     rWalk = new Animation(0.3f, walkR);
                 }
                 currentFrame = (TextureRegion) rWalk.getKeyFrame(stateTime, true);
-                if (x + 32 > Gdx.graphics.getWidth()) {
-                    x = Gdx.graphics.getWidth() - 32;
-                }
-                if (x < 0) {
-                    x = 0;
-                }
-                if (y + 32 > Gdx.graphics.getHeight()) {
-                    y = Gdx.graphics.getHeight() - 32;
-                }
-                if (y < 0) {
-                    y = 0;
-                }
             }
 
 
