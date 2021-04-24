@@ -115,10 +115,10 @@ public abstract class Units extends Actor{
                 d = 0;
             else
                 d = this.damage - a.defence;
-            if (a.getX() - this.getX() +64 < this.activeWeapon.radios && a.getX() - this.getX() +64 >= 0 ||
-                    this.getX() - a.getX() + 64 < this.activeWeapon.radios && this.getX() - a.getX() + 64 >= 0 &&
-                    a.getY() - this.getY() + 98 < this.activeWeapon.radios && a.getY() - this.getY() + 98 >= 0 ||
-                    this.getY() - a.getY() + 98 < this.activeWeapon.radios && this.getY() - a.getY() + 98 >= 0) {
+            if (a.getX() - this.getX() +64 < this.radios && a.getX() - this.getX() +64 >= 0 ||
+                    this.getX() - a.getX() + 64 < this.radios && this.getX() - a.getX() + 64 >= 0 ||
+                    a.getY() - this.getY() + 98 < this.radios && a.getY() - this.getY() + 98 >= 0 ||
+                    this.getY() - a.getY() + 98 < this.radios && this.getY() - a.getY() + 98 >= 0) {
                 a.hitpoints -= d;
                 a.Damage();
                 actionPoint -= 2;
@@ -135,14 +135,10 @@ public abstract class Units extends Actor{
             healthBar.setValue(0);
         }
         if (hitpoints <= 0) {
-            death();//Смерть персонажа
+            alive = false;
+            gameMap.unitsArray.remove(this); //Смерть персонажа
         }
         System.out.println("IIII");
-    }
-
-    public void death() {
-        alive = false;
-        gameMap.unitsArray.remove(this);
     }
 
     public void actionListener() {

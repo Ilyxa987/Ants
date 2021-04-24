@@ -110,13 +110,4 @@ public class Enemy extends Units {
     public Rectangle getRectangle() {
         return rectangle;
     }
-
-    @Override
-    public void death() {
-        KamushekMech kamushekMech = new KamushekMech();
-        kamushekMech.setX(this.x);
-        kamushekMech.setY(this.y);
-        gameMap.itemsArrayList.add(kamushekMech);
-        super.death();
-    }
 }

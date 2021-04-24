@@ -12,7 +12,7 @@ public class KamushekMech extends Weapon {
         name = "KamushekMech";
         sword = new Texture("sword.png");
         damage = 30;
-        radios = 5;
+        radios = 25;
     }
 
     @Override

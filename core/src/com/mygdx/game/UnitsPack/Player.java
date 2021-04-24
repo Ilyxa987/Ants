@@ -17,6 +17,7 @@ import com.mygdx.game.ItemsPack.Armor;
 import com.mygdx.game.ItemsPack.Weapon;
 
 
+
 public class Player extends Units {
 
     private static final int FRAME_COLS = 2;
@@ -27,7 +28,8 @@ public class Player extends Units {
     TextureRegion[] walkL,walkR;
     Animation rWalk, lWalk;
     float stateTime;
-    TextureRegion img;
+    TextureRegion img, currentFrame;
+    Texture png;
 
     public Player(String name, float x, float y, GameMap gameMap) {
         super(name, x, y, gameMap);
@@ -40,6 +42,7 @@ public class Player extends Units {
         damage = activeWeapon.damage;
         defence = activeArmor.defence;
         img = new TextureRegion();
+        img = currentFrame;
         actionPoint = 4;
         radios = activeWeapon.radios;
         animll = new Texture("Left2.png");
@@ -78,7 +81,16 @@ public class Player extends Units {
             @Override
             public void update (Units units){
                 stateTime += Gdx.graphics.getDeltaTime(); // #15
-                rWalk = new Animation(0.3f, walkR);
+                if (this.dx>=0){
+                    rWalk = new Animation(0.3f, walkR);
+                }
+                if (this.dx<0){
+                    rWalk = new Animation(0.3f, walkL);
+                }
+                if (Move==false){
+                    rWalk = new Animation(0.3f, walkR);
+                }
+                currentFrame = (TextureRegion) rWalk.getKeyFrame(stateTime, true);
                 if (x + 32 > Gdx.graphics.getWidth()) {
                     x = Gdx.graphics.getWidth() - 32;
                 }

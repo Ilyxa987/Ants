@@ -33,10 +33,10 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     public ArrayList<Items> itemsArrayList;
     public Units activeUnit;
     TiledMap map;
-    TiledMapTileLayer tiledMapTileLayer;
+    TiledMapTileLayer tiledMapTileLayer, ground, background;
     public MapObjects mapObjects;
     OrthoCachedTiledMapRenderer renderer;
-    FireEffect[] fireEffects;
+    ArrayList<FireEffect> fireEffects;
     boolean fire = false;
     int j;
 
@@ -60,11 +60,13 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         camera.setToOrtho(false, 1560, 720);
         camera.update();
 
-        map = new TmxMapLoader().load("mapp.tmx");
-        tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get("walls");
+        map = new TmxMapLoader().load("newEra.tmx");
+        tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get("second");
         mapObjects = tiledMapTileLayer.getObjects();
 
         renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
+
+
     }
 
 
@@ -77,9 +79,11 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         renderer.setView(camera);
         renderer.render();
         if (fireEffects != null){
-            for (int i = 0; i < fireEffects.length; i++) {
-                fireEffects[i].draw(batch, 1);
-                fireEffects[i].damage(activeUnit);
+            for (int i = 0; i < fireEffects.size(); i++) {
+                System.out.println("SIZE " + fireEffects.size());
+                fireEffects.get(i).draw(batch, 1);
+                if (activeUnit.Attack || activeUnit.Move)
+                fireEffects.get(i).damage(activeUnit);
             }
             fire = false;
         }
@@ -160,16 +164,17 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
             player.Attack = true;
             player.Move = false;
         }
-        else if (FireBall.Fire && activeUnit == player) {
-            fireEffects = new FireEffect[16];
-            for (int i = 0; i < fireEffects.length; i++) {
+        else if (FireBall.Fire && activeUnit == player && activeUnit.actionPoint >= 2) {
+            fireEffects = new ArrayList<>();
+            for (int i = 0; i < 1; i++) {
                 if (i % 4 == 0)
                     j = i / 4;
-                fireEffects[i] = new FireEffect(touchPos.x - 64 + i % 4 * 32, touchPos.y + 64 - j * 32);
+                fireEffects.add(new FireEffect(touchPos.x /*- 64 + i % 4 * 32*/, touchPos.y /*+ 64 - j * 32*/));
             }
             FireBall.Fire = false;
             player.Move = false;
             fire = true;
+            activeUnit.actionPoint -= 2;
         }
         else if (!fire) {
             player.Attack = false;
