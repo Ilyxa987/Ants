@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.Effects.FireEffect;
+import com.mygdx.game.ItemsPack.Items;
 import com.mygdx.game.SkillsPack.AttackSkill;
 import com.mygdx.game.SkillsPack.FireBall;
 import com.mygdx.game.UnitsPack.Enemy;
@@ -30,6 +31,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     Vector3 touchPos, scroll;
     OrthographicCamera camera;
     public ArrayList<Units> unitsArray;
+    public ArrayList<Items> itemsArrayList;
     public Units activeUnit;
     TiledMap map;
     TiledMapTileLayer tiledMapTileLayer;
@@ -37,7 +39,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     public MapObjects mapObjects;
     OrthoCachedTiledMapRenderer renderer;
     ArrayList<FireEffect> fireEffects;
-    boolean fire = false;
+    boolean fire = false, take = true;
     int j;
 
 
@@ -50,6 +52,8 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         unitsArray.add(player);
         unitsArray.add(enemy);
         activeUnit = unitsArray.get(0);
+        itemsArrayList = new ArrayList<>();
+        fireEffects = new ArrayList<>();
 
 
         camera = new OrthographicCamera();
@@ -90,6 +94,9 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
             }
             fire = false;
         }
+        for (int i = 0; i < itemsArrayList.size(); i++) {
+            itemsArrayList.get(i).draw(batch, 1);
+        }
         if (activeUnit.Move) {
             if (activeUnit == player)
                 activeUnit.Move(touchPos.x, touchPos.y);
@@ -119,6 +126,8 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
             unitsArray.get(i).draw(batch);
         }
         renderer.render(ground);
+        if (!take)
+            take = true;
         batch.end();
         //player.exchangeActiveItems();
     }
@@ -181,6 +190,15 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
             player.Attack = false;
             if (!BattleButtons.cameraMove)
             player.Move = true;
+            if (itemsArrayList != null && take) {
+                for (int i = 0; i < itemsArrayList.size(); i++) {
+                    if (touchPos.x >= itemsArrayList.get(i).getX()) {
+                        player.takeItem(itemsArrayList.get(i));
+                        take = false;
+                        break;
+                    }
+                }
+            }
         }
         return false;
     }

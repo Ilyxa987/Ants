@@ -25,7 +25,7 @@ import javax.swing.JLayeredPane;
 
 
 public class Inventory extends Stage {
-    ArrayList<Slot> slotArrayList;
+    public ArrayList<Slot> slotArrayList;
     Items activeWeapon;
     Items activeArmour;
     WeaponSlot weaponSlot;

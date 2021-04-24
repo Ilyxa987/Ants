@@ -14,6 +14,7 @@ import com.mygdx.game.GameSc.Games;
 import com.mygdx.game.GameSc.HealthBar;
 import com.mygdx.game.GameSc.Inventory;
 import com.mygdx.game.ItemsPack.Armor;
+import com.mygdx.game.ItemsPack.Items;
 import com.mygdx.game.ItemsPack.Weapon;
 
 
@@ -91,18 +92,6 @@ public class Player extends Units {
                     rWalk = new Animation(0.3f, walkR);
                 }
                 currentFrame = (TextureRegion) rWalk.getKeyFrame(stateTime, true);
-                if (x + 32 > Gdx.graphics.getWidth()) {
-                    x = Gdx.graphics.getWidth() - 32;
-                }
-                if (x < 0) {
-                    x = 0;
-                }
-                if (y + 32 > Gdx.graphics.getHeight()) {
-                    y = Gdx.graphics.getHeight() - 32;
-                }
-                if (y < 0) {
-                    y = 0;
-                }
             }
 
 
@@ -133,6 +122,15 @@ public class Player extends Units {
                 }
                 if (activeArmor == null) {
                     defence = 0;
+                }
+            }
+
+            public void takeItem(Items items) {
+                for (int i = 0; i < playerInventory.slotArrayList.size(); i++) {
+                    if (playerInventory.slotArrayList.get(i).getIteml() == null) {
+                        playerInventory.slotArrayList.get(i).setIteml(items);
+                        break;
+                    }
                 }
             }
         }

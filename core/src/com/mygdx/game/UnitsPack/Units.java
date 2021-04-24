@@ -1,9 +1,9 @@
 package com.mygdx.game.UnitsPack;
 
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.GameSc.HealthBar;
@@ -17,7 +17,6 @@ public abstract class Units extends Actor{
     public int hitpoints, Speed = 100;
     public float x, y, dx, dy;
     public TextureRegion img;
-    public Texture animll, animrr;
     public final int k = 25;
     public int steps;
     public boolean Move = false, Attack = false;
@@ -31,6 +30,7 @@ public abstract class Units extends Actor{
     int stepMetr = 0;
     int radios;
     GameMap gameMap;
+    Rectangle rectangle;
 
 
 
@@ -41,8 +41,7 @@ public abstract class Units extends Actor{
         this.x = x;
         this.y = y;
         healthBar = new HealthBar(20, 0, 0);
-        animll = new Texture("anLeftE.png");
-        animrr = new Texture("anRightE.png");
+        rectangle = new Rectangle(x, y, 64, 98);
     }
 
 
@@ -113,10 +112,10 @@ public abstract class Units extends Actor{
                 d = 0;
             else
                 d = this.damage - a.defence;
-            if (a.getX() - this.getX() - this.animll.getWidth()/2< this.radios &&
-                    this.getX() - a.getX() - a.animll.getWidth()/2 < this.radios &&
-                    a.getY() - this.getY() - this.animll.getHeight()/2 < this.radios &&
-                    this.getY() - a.getY() - a.animll.getHeight()/2 < this.radios) {
+            if (a.getX() - this.getX() -64 < this.radios &&
+                    this.getX() - a.getX() - 64 < this.radios &&
+                    a.getY() - this.getY() - 98 < this.radios &&
+                    this.getY() - a.getY() - 98 < this.radios) {
                 a.hitpoints -= d;
                 a.Damage();
                 actionPoint -= 2;
@@ -132,9 +131,8 @@ public abstract class Units extends Actor{
         else {
             healthBar.setValue(0);
         }
-        if (hitpoints <= 0) {
-            alive = false;
-            gameMap.unitsArray.remove(this); //Смерть персонажа
+        if (hitpoints <= 0 && alive) {
+            death();//Смерть персонажа
         }
         System.out.println("IIII");
     }
@@ -157,5 +155,27 @@ public abstract class Units extends Actor{
 
     public void draw(SpriteBatch batch){}
     public void update(Units units) {
+        if (x + 64 >= units.getX()
+                && y >= units.getY() - 98
+                && y <= units.getY() + 98
+                && x <= units.getX() + 64
+                && alive == true) {
+            units.Stop();
+            Stop();
+        }
+//        for (RectangleMapObject rectangleMapObject: gameMap.mapObjects.getByType(RectangleMapObject.class)) {
+//            Rectangle rectangle = rectangleMapObject.getRectangle();
+//            if (Intersector.overlaps(rectangle, this.getRectangle()))
+//                Stop();
+//        }
     }
+
+    public Rectangle getRectangle() {
+        return rectangle;
     }
+
+    public void death() {
+        alive = false;
+        gameMap.unitsArray.remove(this);
+    }
+}
