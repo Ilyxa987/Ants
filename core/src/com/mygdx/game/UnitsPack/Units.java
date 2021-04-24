@@ -1,11 +1,8 @@
 package com.mygdx.game.UnitsPack;
 
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.GameSc.GameMap;
@@ -135,8 +132,7 @@ public abstract class Units extends Actor{
             healthBar.setValue(0);
         }
         if (hitpoints <= 0) {
-            alive = false;
-            gameMap.unitsArray.remove(this); //Смерть персонажа
+            death();//Смерть персонажа
         }
         System.out.println("IIII");
     }
@@ -176,5 +172,10 @@ public abstract class Units extends Actor{
 
     public Rectangle getRectangle() {
         return rectangle;
+    }
+
+    public void death() {
+        alive = false;
+        gameMap.unitsArray.remove(this);
     }
 }
