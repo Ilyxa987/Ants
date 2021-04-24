@@ -14,8 +14,8 @@ public class FireEffect extends Actor {
     Texture img;
     TextureRegion[] fireEf;
     TextureRegion currentFrame;
-    private static final int FRAME_COLS = 4;
-    private static final int FRAME_ROWS = 4;
+    private static final int FRAME_COLS = 2;
+    private static final int FRAME_ROWS = 2;
     Float stateTime;
     Animation gorenia;
 
@@ -24,7 +24,7 @@ public class FireEffect extends Actor {
         this.x = x;
         this.y = y;
         setPosition(x, y);
-        img = new Texture("FireFlover.png");
+        img = new Texture("met.png");
         TextureRegion[][] tmpR = TextureRegion.split(img, img.getWidth()/FRAME_COLS, img.getHeight()/FRAME_ROWS); // #10
         fireEf = new TextureRegion[FRAME_COLS*FRAME_ROWS];
         int index = 0;
@@ -39,7 +39,7 @@ public class FireEffect extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         stateTime += Gdx.graphics.getDeltaTime();
-        gorenia = new Animation(0.3f, fireEf);
+        gorenia = new Animation(0.2f, fireEf);
         currentFrame = (TextureRegion) gorenia.getKeyFrame(stateTime, true);
         super.draw(batch, parentAlpha);
         batch.draw(currentFrame, x, y);

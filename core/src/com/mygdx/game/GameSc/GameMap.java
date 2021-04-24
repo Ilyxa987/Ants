@@ -31,7 +31,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     public ArrayList<Units> unitsArray;
     public Units activeUnit;
     TiledMap map;
-    TiledMapTileLayer tiledMapTileLayer;
+    TiledMapTileLayer tiledMapTileLayer, ground, background;
     public MapObjects mapObjects;
     OrthoCachedTiledMapRenderer renderer;
     ArrayList<FireEffect> fireEffects;
@@ -57,11 +57,13 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         camera.setToOrtho(false, 1560, 720);
         camera.update();
 
-        map = new TmxMapLoader().load("mapp.tmx");
-        tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get("walls");
+        map = new TmxMapLoader().load("newEra.tmx");
+        tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get("second");
         mapObjects = tiledMapTileLayer.getObjects();
 
         renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
+
+
     }
 
 
@@ -158,10 +160,10 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         }
         else if (FireBall.Fire && activeUnit == player && activeUnit.actionPoint >= 2) {
             fireEffects = new ArrayList<>();
-            for (int i = 0; i < 16; i++) {
+            for (int i = 0; i < 1; i++) {
                 if (i % 4 == 0)
                     j = i / 4;
-                fireEffects.add(new FireEffect(touchPos.x - 64 + i % 4 * 32, touchPos.y + 64 - j * 32));
+                fireEffects.add(new FireEffect(touchPos.x /*- 64 + i % 4 * 32*/, touchPos.y /*+ 64 - j * 32*/));
             }
             FireBall.Fire = false;
             player.Move = false;
