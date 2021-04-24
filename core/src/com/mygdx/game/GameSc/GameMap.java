@@ -37,7 +37,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     public MapObjects mapObjects;
     OrthoCachedTiledMapRenderer renderer;
     ArrayList<FireEffect> fireEffects;
-    boolean fire = false;
+    boolean fire = false, take = true;
     int j;
 
 
@@ -118,6 +118,8 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
             unitsArray.get(i).update(player);
             unitsArray.get(i).draw(batch);
         }
+        if (!take)
+            take = true;
         batch.end();
         //player.exchangeActiveItems();
     }
@@ -180,6 +182,15 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
             player.Attack = false;
             if (!BattleButtons.cameraMove)
             player.Move = true;
+            if (itemsArrayList != null && take) {
+                for (int i = 0; i < itemsArrayList.size(); i++) {
+                    if (touchPos.x >= itemsArrayList.get(i).getX()) {
+                        player.takeItem(itemsArrayList.get(i));
+                        take = false;
+                        break;
+                    }
+                }
+            }
         }
         return false;
     }

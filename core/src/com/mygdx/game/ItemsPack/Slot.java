@@ -69,4 +69,8 @@ public class Slot extends TextButton {
     public Items getIteml() {
         return iteml;
     }
+
+    public void setIteml(Items iteml) {
+        this.iteml = iteml;
+    }
 }

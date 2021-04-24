@@ -14,6 +14,7 @@ import com.mygdx.game.GameSc.Games;
 import com.mygdx.game.GameSc.HealthBar;
 import com.mygdx.game.GameSc.Inventory;
 import com.mygdx.game.ItemsPack.Armor;
+import com.mygdx.game.ItemsPack.Items;
 import com.mygdx.game.ItemsPack.Weapon;
 
 
@@ -121,6 +122,15 @@ public class Player extends Units {
                 }
                 if (activeArmor == null) {
                     defence = 0;
+                }
+            }
+
+            public void takeItem(Items items) {
+                for (int i = 0; i < playerInventory.slotArrayList.size(); i++) {
+                    if (playerInventory.slotArrayList.get(i).getIteml() == null) {
+                        playerInventory.slotArrayList.get(i).setIteml(items);
+                        break;
+                    }
                 }
             }
         }
