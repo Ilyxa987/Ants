@@ -131,7 +131,7 @@ public abstract class Units extends Actor{
         else {
             healthBar.setValue(0);
         }
-        if (hitpoints <= 0) {
+        if (hitpoints <= 0 && alive) {
             death();//Смерть персонажа
         }
         System.out.println("IIII");
