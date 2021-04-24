@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -31,7 +32,8 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     public ArrayList<Units> unitsArray;
     public Units activeUnit;
     TiledMap map;
-    TiledMapTileLayer tiledMapTileLayer, ground, background;
+    TiledMapTileLayer tiledMapTileLayer;
+    MapLayer fone, ground, foreground;
     public MapObjects mapObjects;
     OrthoCachedTiledMapRenderer renderer;
     ArrayList<FireEffect> fireEffects;
@@ -57,9 +59,11 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         camera.setToOrtho(false, 1560, 720);
         camera.update();
 
-        map = new TmxMapLoader().load("newEra.tmx");
-        tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get("second");
-        mapObjects = tiledMapTileLayer.getObjects();
+        map = new TmxMapLoader().load("newEra1.tmx");
+        fone = map.getLayers().get("fone");
+        ground = map.getLayers().get("first");
+        foreground = map.getLayers().get("second");
+        //mapObjects = tiledMapTileLayer.getObjects();
 
         renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
 
@@ -69,12 +73,14 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
 
     @Override
     public void draw() {
+        int[] fone = {0,1};
+        int[] ground = {2};
         super.draw();
         SpriteBatch batch = new SpriteBatch();
         batch.begin();
         camera.update();
         renderer.setView(camera);
-        renderer.render();
+        renderer.render(fone);
         if (fireEffects != null){
             for (int i = 0; i < fireEffects.size(); i++) {
                 System.out.println("SIZE " + fireEffects.size());
@@ -112,6 +118,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
             unitsArray.get(i).update(player);
             unitsArray.get(i).draw(batch);
         }
+        renderer.render(ground);
         batch.end();
         //player.exchangeActiveItems();
     }
