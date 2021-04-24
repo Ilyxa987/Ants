@@ -12,6 +12,11 @@ public class Items extends Actor {
     String name;
 
     public Items() {
-        name = null;
+        addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+            }
+        });
     }
 }
