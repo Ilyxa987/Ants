@@ -186,6 +186,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
                 for (int i = 0; i < itemsArrayList.size(); i++) {
                     if (touchPos.x >= itemsArrayList.get(i).getX()) {
                         player.takeItem(itemsArrayList.get(i));
+                        itemsArrayList.remove(i);
                         take = false;
                         break;
                     }
