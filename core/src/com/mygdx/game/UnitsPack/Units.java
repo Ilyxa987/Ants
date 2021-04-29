@@ -3,6 +3,8 @@ package com.mygdx.game.UnitsPack;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.GameSc.GameMap;
@@ -95,6 +97,8 @@ public abstract class Units extends Actor{
                 if (stepMetr % 30 == 0)
                     actionPoint --;
             }
+            this.rectangle.x = this.x;
+            this.rectangle.y = this.y;
         }
     }
 
@@ -163,11 +167,13 @@ public abstract class Units extends Actor{
             units.Stop();
             Stop();
         }
-//        for (RectangleMapObject rectangleMapObject: gameMap.mapObjects.getByType(RectangleMapObject.class)) {
-//            Rectangle rectangle = rectangleMapObject.getRectangle();
-//            if (Intersector.overlaps(rectangle, this.getRectangle()))
-//                Stop();
-//        }
+        System.out.println("Rectangle" + gameMap.mapObjects.getByType(RectangleMapObject.class).size);
+        for (RectangleMapObject rectangleMapObject: gameMap.mapObjects.getByType(RectangleMapObject.class)) {
+            Rectangle rectangle = rectangleMapObject.getRectangle();
+            System.out.println("RECTANGLE" + rectangle.getX() + " " + rectangle.getY() + " " + rectangle.getWidth() + " " + rectangle.getHeight());
+            if (Intersector.overlaps(rectangle, this.getRectangle()))
+                Stop();
+        }
     }
 
     public Rectangle getRectangle() {

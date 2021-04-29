@@ -27,7 +27,6 @@ public class Enemy extends Units {
     Animation rWalk, lWalk;
     float stateTime;
     TextureRegion img;
-    Rectangle rectangle;
 
 
     public Enemy(String name, float x, float y, GameMap gameMap, final Player player) {

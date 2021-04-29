@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -22,6 +24,7 @@ import com.mygdx.game.UnitsPack.Player;
 import com.mygdx.game.UnitsPack.Units;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameMap extends Stage implements GestureDetector.GestureListener {
     final Games games;
@@ -33,18 +36,19 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     public ArrayList<Items> itemsArrayList;
     public Units activeUnit;
     TiledMap map;
-    TiledMapTileLayer tiledMapTileLayer, ground, background;
+    public TiledMapTileLayer tiledMapTileLayer, ground, background;
     public MapObjects mapObjects;
     OrthoCachedTiledMapRenderer renderer;
     ArrayList<FireEffect> fireEffects;
     boolean fire = false, take = true;
-    int j;
+    int ID;
+    public Iterator<MapObject> iterator;
 
 
     public GameMap(Games games) {
         this.games = games;
 
-        player = new Player("Player", 0, 0, this);
+        player = new Player("Player", 1, 1, this);
         enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3 * 2, Gdx.graphics.getHeight() / 2, this, player);
         unitsArray = new ArrayList<>();
         unitsArray.add(player);
@@ -62,8 +66,9 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         camera.update();
 
         map = new TmxMapLoader().load("newEra.tmx");
+        MapLayer mapLayer = map.getLayers().get("water");
         tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get("second");
-        mapObjects = tiledMapTileLayer.getObjects();
+        mapObjects = mapLayer.getObjects();
 
         renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
 
@@ -116,7 +121,10 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         activeUnit.actionListener();
         player.changeActiveItems();
         for (int i = 0; i < unitsArray.size(); i++) {
-            unitsArray.get(i).update(player);
+            if (unitsArray.get(i) == enemy)
+               unitsArray.get(i).update(player);
+            else
+                unitsArray.get(i).update(enemy);
             unitsArray.get(i).draw(batch);
         }
         if (!take)
@@ -169,8 +177,6 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         }
         else if (FireBall.Fire && activeUnit == player && activeUnit.actionPoint >= 2) {
             for (int i = 0; i < 1; i++) {
-                if (i % 4 == 0)
-                    j = i / 4;
                 fireEffects.add(new FireEffect(touchPos.x /*- 64 + i % 4 * 32*/, touchPos.y /*+ 64 - j * 32*/));
             }
             FireBall.Fire = false;

@@ -67,6 +67,7 @@ public class Player extends Units {
         }
         lWalk = new Animation(0.25f, walkL);
         stateTime = 0f;
+        rectangle = new Rectangle(x, y, 64, 98);
     }
 
 
@@ -92,6 +93,7 @@ public class Player extends Units {
                     rWalk = new Animation(0.3f, walkR);
                 }
                 currentFrame = (TextureRegion) rWalk.getKeyFrame(stateTime, true);
+                super.update(units);
             }
 
 
