@@ -1,8 +1,16 @@
 package com.mygdx.game.UnitsPack;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.GameSc.GameMap;
@@ -10,13 +18,14 @@ import com.mygdx.game.GameSc.HealthBar;
 import com.mygdx.game.ItemsPack.Armor;
 import com.mygdx.game.ItemsPack.Weapon;
 
+import sun.rmi.runtime.Log;
 
 
 public abstract class Units extends Actor{
+    Player player;
     public String name;
     public int hitpoints, Speed = 100;
     public float x, y, dx, dy;
-    public TextureRegion img;
     public final int k = 25;
     public int steps;
     public boolean Move = false, Attack = false;
@@ -31,6 +40,11 @@ public abstract class Units extends Actor{
     int radios;
     GameMap gameMap;
     Rectangle rectangle;
+    //TiledMap map;
+    //MapLayer fone, ground, foreground;
+    public Texture animll;
+
+
 
 
 
@@ -42,6 +56,8 @@ public abstract class Units extends Actor{
         this.y = y;
         healthBar = new HealthBar(20, 0, 0);
         rectangle = new Rectangle(x, y, 64, 98);
+        animll = new Texture("anLeftE.png");
+//        gameMap.fone = gameMap.map.getLayers().get("first");
     }
 
 
@@ -163,6 +179,21 @@ public abstract class Units extends Actor{
             units.Stop();
             Stop();
         }
+
+        /*for (int i = 0; gameMap.mapObjects.iterator().hasNext(); i++) {
+            MapProperties mapProperties = gameMap.mapObject.getProperties();
+
+            float width, height, x, y;
+            Rectangle objectRectangle = new Rectangle();
+            width = (float) mapProperties.get("width");
+            height = (float) mapProperties.get("height");
+            x = (float) mapProperties.get("x");
+            y = (float) mapProperties.get("y");
+            objectRectangle.set(x, y, width, height);
+            gameMap.walls.add(objectRectangle);
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + gameMap.walls.size());
+        }
+*/
 //        for (RectangleMapObject rectangleMapObject: gameMap.mapObjects.getByType(RectangleMapObject.class)) {
 //            Rectangle rectangle = rectangleMapObject.getRectangle();
 //            if (Intersector.overlaps(rectangle, this.getRectangle()))

@@ -6,11 +6,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -24,6 +30,8 @@ import com.mygdx.game.UnitsPack.Units;
 
 import java.util.ArrayList;
 
+import sun.rmi.runtime.Log;
+
 public class GameMap extends Stage implements GestureDetector.GestureListener {
     final Games games;
     Player player;
@@ -33,14 +41,24 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     public ArrayList<Units> unitsArray;
     public ArrayList<Items> itemsArrayList;
     public Units activeUnit;
-    TiledMap map;
+    public TiledMap map;
     TiledMapTileLayer tiledMapTileLayer;
-    MapLayer fone, ground, foreground;
+    public MapLayer fone, ground, foreground;
     public MapObjects mapObjects;
+    public MapObject wallOblekt, wallOblekt2, wallOblekt3, wallOblekt4, wallOblekt5, wallOblekt6, wallOblekt7, mapObject ;
     OrthoCachedTiledMapRenderer renderer;
     ArrayList<FireEffect> fireEffects;
+    public ArrayList<Rectangle> walls;
     boolean fire = false, take = true;
     int j;
+    public float oY, oX, oH, oW,
+            oY2, oX2, oH2, oW2,
+            oY3, oX3, oH3, oW3,
+            oY4, oX4, oH4, oW4,
+            oY5, oX5, oH5, oW5,
+            oY6, oX6, oH6, oW6,
+            oY7, oX7, oH7, oW7;
+    public  Rectangle rect;
 
 
     public GameMap(Games games) {
@@ -54,6 +72,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         activeUnit = unitsArray.get(0);
         itemsArrayList = new ArrayList<>();
         fireEffects = new ArrayList<>();
+        walls = new ArrayList<>();
 
 
         camera = new OrthographicCamera();
@@ -63,22 +82,45 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         camera.setToOrtho(false, 1560, 720);
         camera.update();
 
-        map = new TmxMapLoader().load("newEra1.tmx");
-        fone = map.getLayers().get("fone");
-        ground = map.getLayers().get("first");
+        map = new TmxMapLoader().load("newEra.tmx");
+        fone = map.getLayers().get("first");
+        //ground = map.getLayers().get("first");
         foreground = map.getLayers().get("second");
-        //mapObjects = tiledMapTileLayer.getObjects();
-
-        renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
+       // wallOblekt = fone.getObjects().get(49);
 
 
+        mapObjects = map.getLayers().get(0).getObjects();
+
+        for (MapObject object:mapObjects) {
+            MapProperties mapProperties = mapObject.getProperties();
+if (object instanceof TextureMapObject){
+    TextureMapObject mapObject = (TextureMapObject)object;
+    this.rect = new Rectangle(mapObject.getX(), mapObject.getY(),
+            mapObject.getTextureRegion().getRegionWidth(), mapObject.getTextureRegion().getRegionHeight());
+    walls.add(this.rect);
+}
+else
+{this.rect = ((RectangleMapObject)object).getRectangle();}
+            /*float width, height, x, y;
+            Rectangle objectRectangle = new Rectangle();
+                width = (float) mapProperties.get("width");
+                height = (float) mapProperties.get("height");
+                x = (float) mapProperties.get("x");
+                y = (float) mapProperties.get("y");
+                objectRectangle.set(x, y, width, height);
+                walls.add(objectRectangle);
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + walls.size());*/
+        }
+
+
+            renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
     }
 
 
     @Override
     public void draw() {
-        int[] fone = {0,1};
-        int[] ground = {2};
+        int[] fone = {0};
+        int[] ground = {1};
         super.draw();
         SpriteBatch batch = new SpriteBatch();
         batch.begin();
@@ -131,6 +173,39 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         batch.end();
         //player.exchangeActiveItems();
     }
+    /*public boolean getCollision(int layerIndex) {
+        MapObjects mapObjects = map.getLayers().get(layerIndex).getObjects();
+
+        for (MapObject mapObject : mapObjects) {
+            MapProperties mapProperties = mapObject.getProperties();
+
+            float width, height, x, y;
+            Rectangle objectRectangle = new Rectangle();
+            Rectangle playerRectangle = new Rectangle();
+
+            if (mapProperties.containsKey("width") && mapProperties.containsKey("height") && mapProperties.containsKey("x") && mapProperties.containsKey("y")) {
+                width = (float) mapProperties.get("width");
+                height = (float) mapProperties.get("height");
+                x = (float) mapProperties.get("x");
+                y = (float) mapProperties.get("y");
+                objectRectangle.set(x, y, width, height);
+            }
+
+            playerRectangle.set(
+                    activeUnit.getX(),
+                    activeUnit.getY(),
+                    player.animll.getWidth(),
+                    player.animll.getHeight());
+
+// If the player rectangle and the object rectangle is colliding, return the object
+            if (Intersector.overlaps(objectRectangle, playerRectangle)) {
+                return true;
+            }
+        }
+
+// If no colliding object was found in that layer
+        return false;
+    }*/
 
 //    @Override
 //    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -176,9 +251,9 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         }
         else if (FireBall.Fire && activeUnit == player && activeUnit.actionPoint >= 2) {
             fireEffects = new ArrayList<>();
-            for (int i = 0; i < 1; i++) {
-                if (i % 4 == 0)
-                    j = i / 4;
+            for (int i = 0; i < 2; i++) {
+                /*if (i % 4 == 0)
+                    j = i / 4;*/
                 fireEffects.add(new FireEffect(touchPos.x /*- 64 + i % 4 * 32*/, touchPos.y /*+ 64 - j * 32*/));
             }
             FireBall.Fire = false;
