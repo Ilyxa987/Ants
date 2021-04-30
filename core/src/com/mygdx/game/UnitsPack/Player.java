@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.GameSc.GameMap;
@@ -28,12 +25,12 @@ public class Player extends Units {
     private static final int FRAME_ROWS = 2;
     Games playerGame;
     Inventory playerInventory;
-    public Texture animll, animrr;
+    Texture animll, animrr;
     TextureRegion[] walkL,walkR;
     Animation rWalk, lWalk;
     float stateTime;
     TextureRegion img, currentFrame;
-    public Rectangle playerRectangle;
+    Texture png;
 
     public Player(String name, float x, float y, GameMap gameMap) {
         super(name, x, y, gameMap);
@@ -49,7 +46,6 @@ public class Player extends Units {
         img = currentFrame;
         actionPoint = 4;
         radios = activeWeapon.radios;
-        playerRectangle = new Rectangle();
         animll = new Texture("Left2.png");
         animrr = new Texture("Right2.png");
         TextureRegion[][] tmpR = TextureRegion.split(animrr, animrr.getWidth()/2, animrr.getHeight()/2); // #10
@@ -71,6 +67,7 @@ public class Player extends Units {
         }
         lWalk = new Animation(0.25f, walkL);
         stateTime = 0f;
+        rectangle = new Rectangle(x, y, 64, 98);
     }
 
 
@@ -96,31 +93,7 @@ public class Player extends Units {
                     rWalk = new Animation(0.3f, walkR);
                 }
                 currentFrame = (TextureRegion) rWalk.getKeyFrame(stateTime, true);
-                playerRectangle.set(
-                        this.getX(),
-                        this.getY(),
-                        animll.getWidth(),
-                        animll.getHeight());
-
-                for (int i = 0; i <gameMap.walls.size() ; i++) {
-            /*if (Intersector.overlaps(gameMap.walls.get(i), playerRectangle)) {
-                hitpoints-=100;
-            }*/
-                    if (/*gameMap.activeUnit.getX() + gameMap.walls.get(i).width >= gameMap.walls.get(i).getX()
-                    && gameMap.activeUnit.getY() >= gameMap.walls.get(i).getY() - gameMap.walls.get(i).height
-                    && gameMap.activeUnit.getY() <= gameMap.walls.get(i).getY() + gameMap.walls.get(i).height
-                    && gameMap.activeUnit.getX() <= gameMap.walls.get(i).x + gameMap.walls.get(i).width*/
-                            Intersector.overlaps(playerRectangle, gameMap.walls.get(i))
-                                    && alive == true) {
-                        if (dx>=0) {this.dx = -20;}
-                        if (dx<0){this.dx=20;}
-                        if (dy>=0) {this.dy=-20;}
-                        if (dy<0){this.dy=20;}
-                        hitpoints-=50;
-                /*units.Stop();
-                Stop();*/
-                    }
-                }
+                super.update(units);
             }
 
 
