@@ -18,7 +18,6 @@ public abstract class Units extends Actor{
     public String name;
     public int hitpoints, Speed = 100;
     public float x, y, dx, dy;
-    public TextureRegion img;
     public final int k = 25;
     public int steps;
     public boolean Move = false, Attack = false;
