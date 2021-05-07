@@ -32,6 +32,7 @@ public abstract class Units extends Actor{
     int radios;
     GameMap gameMap;
     Rectangle rectangle;
+    Enemy enemy;
 
 
 
@@ -135,7 +136,8 @@ public abstract class Units extends Actor{
             healthBar.setValue(0);
         }
         if (hitpoints <= 0 && alive) {
-            death();//Смерть персонажа
+            death();
+            rectangle.set(0,0,0,0) ;//Смерть персонажа
         }
         System.out.println("IIII");
     }
@@ -162,7 +164,8 @@ public abstract class Units extends Actor{
                 && y >= units.getY() - 98
                 && y <= units.getY() + 98
                 && x <= units.getX() + 64
-                && alive == true) {
+                && alive == true
+        && gameMap.unitsArray.size()>1) {
             units.Stop();
             Stop();
         }
@@ -170,8 +173,9 @@ public abstract class Units extends Actor{
         for (RectangleMapObject rectangleMapObject: gameMap.mapObjects.getByType(RectangleMapObject.class)) {
             Rectangle rectangle = rectangleMapObject.getRectangle();
             System.out.println("RECTANGLE" + rectangle.getX() + " " + rectangle.getY() + " " + rectangle.getWidth() + " " + rectangle.getHeight());
-            if (Intersector.overlaps(rectangle, this.getRectangle()))
+            if (Intersector.overlaps(rectangle, this.getRectangle())) {
                 Stop();
+            }
         }
     }
 

@@ -29,7 +29,7 @@ import java.util.Iterator;
 public class GameMap extends Stage implements GestureDetector.GestureListener {
     final Games games;
     Player player;
-    Enemy enemy;
+    public Enemy enemy;
     Vector3 touchPos, scroll;
     OrthographicCamera camera;
     public ArrayList<Units> unitsArray;
@@ -43,13 +43,14 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     boolean fire = false, take = true;
     int ID;
     public Iterator<MapObject> iterator;
+    SpriteBatch batch;
 
 
     public GameMap(Games games) {
         this.games = games;
 
         player = new Player("Player", 1, 1, this);
-        enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3 * 2, Gdx.graphics.getHeight() / 2, this, player);
+        enemy = new Enemy("Enemy", Gdx.graphics.getWidth() /  2, Gdx.graphics.getHeight() /5 * 4, this, player);
         unitsArray = new ArrayList<>();
         unitsArray.add(player);
         unitsArray.add(enemy);
@@ -72,6 +73,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         fone =(TiledMapTileLayer)map.getLayers().get("first");
 
             renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
+            batch = new SpriteBatch();
     }
 
 
@@ -80,7 +82,6 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         int[] fone = {0};
         int[] ground = {1};
         super.draw();
-        SpriteBatch batch = new SpriteBatch();
         batch.begin();
         camera.update();
         renderer.setView(camera);
