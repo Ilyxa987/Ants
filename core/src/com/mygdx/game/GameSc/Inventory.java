@@ -84,6 +84,7 @@ public class Inventory extends Stage {
         addActor(weaponSlot);
         activeWeapon.setPosition(weaponSlot.getX(), weaponSlot.getY());
         addActor(activeArmour);
+        font.dispose();
     }
 
     @Override

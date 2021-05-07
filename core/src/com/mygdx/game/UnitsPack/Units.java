@@ -7,11 +7,13 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Pool;
 import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.GameSc.HealthBar;
 import com.mygdx.game.ItemsPack.Armor;
 import com.mygdx.game.ItemsPack.Weapon;
 
+import javax.swing.Renderer;
 
 
 public abstract class Units extends Actor{

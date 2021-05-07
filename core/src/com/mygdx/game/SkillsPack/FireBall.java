@@ -35,6 +35,7 @@ public class FireBall extends Skills{
                    Fire = true;
             }
         });
+        font.dispose();
     }
 
     public void draw(Batch batch, float parentAlpha, float x, float y) {

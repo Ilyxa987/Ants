@@ -34,6 +34,7 @@ public class AttackSkill extends Skills {
                 System.out.println("ATTACK");
             }
         });
+        font.dispose();
     }
 
 

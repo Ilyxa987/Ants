@@ -59,6 +59,7 @@ public class SkillBar extends Stage {
                 addActor(skillArray[i]);
             }
         }
+        font.dispose();
     }
 
     @Override
@@ -71,5 +72,6 @@ public class SkillBar extends Stage {
         super.dispose();
         skillHubImage.dispose();
         at.dispose();
+
     }
 }

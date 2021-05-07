@@ -107,5 +107,6 @@ public class BattleButtons extends Stage {
                     cameraMove = false;
             }
         });
+        font.dispose();
     }
 }
