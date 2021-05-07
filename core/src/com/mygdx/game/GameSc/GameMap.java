@@ -36,7 +36,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     public ArrayList<Items> itemsArrayList;
     public Units activeUnit;
     TiledMap map;
-    public TiledMapTileLayer tiledMapTileLayer;
+    public TiledMapTileLayer tiledMapTileLayer,fone;
     public MapObjects mapObjects;
     OrthoCachedTiledMapRenderer renderer;
     ArrayList<FireEffect> fireEffects;
@@ -69,21 +69,22 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         MapLayer mapLayer = map.getLayers().get("water");
         tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get("second");
         mapObjects = mapLayer.getObjects();
+        fone =(TiledMapTileLayer)map.getLayers().get("first");
 
-        renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
-
-
+            renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
     }
 
 
     @Override
     public void draw() {
+        int[] fone = {0};
+        int[] ground = {1};
         super.draw();
         SpriteBatch batch = new SpriteBatch();
         batch.begin();
         camera.update();
         renderer.setView(camera);
-        renderer.render();
+        renderer.render(fone);
         if (fireEffects != null){
             for (int i = 0; i < fireEffects.size(); i++) {
                 System.out.println("SIZE " + fireEffects.size());
@@ -127,6 +128,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
                 unitsArray.get(i).update(enemy);
             unitsArray.get(i).draw(batch);
         }
+        renderer.render(ground);
         if (!take)
             take = true;
         batch.end();
