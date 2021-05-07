@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -24,7 +23,6 @@ import com.mygdx.game.UnitsPack.Player;
 import com.mygdx.game.UnitsPack.Units;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class GameMap extends Stage implements GestureDetector.GestureListener {
     final Games games;
@@ -41,8 +39,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     OrthoCachedTiledMapRenderer renderer;
     ArrayList<FireEffect> fireEffects;
     boolean fire = false, take = true;
-    int ID;
-    public Iterator<MapObject> iterator;
+    SpriteBatch batch;
 
 
     public GameMap(Games games) {
@@ -71,7 +68,9 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         mapObjects = mapLayer.getObjects();
         fone =(TiledMapTileLayer)map.getLayers().get("first");
 
-            renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
+        renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
+
+        batch = new SpriteBatch();
     }
 
 
@@ -80,7 +79,6 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         int[] fone = {0};
         int[] ground = {1};
         super.draw();
-        SpriteBatch batch = new SpriteBatch();
         batch.begin();
         camera.update();
         renderer.setView(camera);
@@ -132,7 +130,6 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         if (!take)
             take = true;
         batch.end();
-        //player.exchangeActiveItems();
     }
 
 //    @Override
@@ -254,7 +251,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
 
     @Override
     public void pinchStop() {
-
+        batch = new SpriteBatch();
     }
 
     @Override
