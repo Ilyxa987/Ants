@@ -49,7 +49,7 @@ public class Slot extends TextButton {
                     iteml = null;
                     inventory.getitem = true;
                 }
-                else if (iteml == null) {
+                else if (iteml == null && inventory.getitem) {
                     iteml = inventory.between;
                     inventory.getitem = false;
                 }

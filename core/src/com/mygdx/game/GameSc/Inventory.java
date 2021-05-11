@@ -32,7 +32,7 @@ public class Inventory extends Stage {
     ArmourSlot armourSlot;
     public TextButton inventoryHub;
     public boolean getitem;
-    public Items between, item;
+    public Items between;
 
     public Inventory() {
 
