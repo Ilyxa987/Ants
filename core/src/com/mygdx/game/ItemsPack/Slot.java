@@ -55,6 +55,8 @@ public class Slot extends TextButton {
                 }
             }
         });
+
+        font.dispose();
     }
 
     @Override

@@ -33,6 +33,7 @@ public class Inventory extends Stage {
     public TextButton inventoryHub;
     public boolean getitem;
     public Items between;
+    SpriteBatch batch;
 
     public Inventory() {
 
@@ -84,12 +85,15 @@ public class Inventory extends Stage {
         addActor(weaponSlot);
         activeWeapon.setPosition(weaponSlot.getX(), weaponSlot.getY());
         addActor(activeArmour);
+
+        font.dispose();
+
+        batch = new SpriteBatch();
     }
 
     @Override
     public void draw() {
         super.draw();
-        SpriteBatch batch = new SpriteBatch();
         batch.begin();
         armourSlot.setPosition(inventoryHub.getX() + 450, inventoryHub.getY() + 200);
         weaponSlot.setPosition(inventoryHub.getX() + 450, inventoryHub.getY() + 400);

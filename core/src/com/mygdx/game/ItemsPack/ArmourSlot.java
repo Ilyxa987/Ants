@@ -57,6 +57,8 @@ public class ArmourSlot extends TextButton {
                 }
             }
         });
+
+        font.dispose();
     }
 
     @Override

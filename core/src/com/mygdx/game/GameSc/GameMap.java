@@ -34,12 +34,14 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     public ArrayList<Items> itemsArrayList;
     public Units activeUnit;
     TiledMap map;
-    public TiledMapTileLayer tiledMapTileLayer,fone;
     public MapObjects mapObjects;
     OrthoCachedTiledMapRenderer renderer;
     ArrayList<FireEffect> fireEffects;
     boolean fire = false, take = true;
     SpriteBatch batch;
+    int[] fone;
+    int[] ground;
+
 
 
     public GameMap(Games games) {
@@ -64,20 +66,19 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
 
         map = new TmxMapLoader().load("newEra.tmx");
         MapLayer mapLayer = map.getLayers().get("water");
-        tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get("second");
         mapObjects = mapLayer.getObjects();
-        fone =(TiledMapTileLayer)map.getLayers().get("first");
 
         renderer = new OrthoCachedTiledMapRenderer(map, 1, 5000);
 
         batch = new SpriteBatch();
+
+       fone = new int[] {0};
+       ground = new int[] {1};
     }
 
 
     @Override
     public void draw() {
-        int[] fone = {0};
-        int[] ground = {1};
         super.draw();
         batch.begin();
         camera.update();
@@ -131,35 +132,6 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
             take = true;
         batch.end();
     }
-
-//    @Override
-//    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//        System.out.println("Coordinates Camera " + camera.position.x + " " + camera.position.y);
-//        touchPos.set(screenX, screenY, 0);
-//        camera.unproject(touchPos);
-//        if (touchPos.x >= enemy.getX() && AttackSkill.attack == true){
-//            System.out.println("RRRRRRR");
-//            player.Attack = true;
-//            player.Move = false;
-//        }
-//        else {
-//            player.Attack = false;
-//            player.Move = true;
-//        }
-//        return true;
-//    }
-
-//    @Override
-//    public boolean touchDragged(int screenX, int screenY, int pointer) {
-//        if (Gdx.input.getCurrentEventTime() > 20000 * 20) {
-//            touchPos.set(screenX, screenY, 0);
-//            camera.unproject(touchPos);
-//            camera.position.set(Gdx.graphics.getWidth() - screenX, screenY, camera.position.z);
-//            System.out.println("Coordinates Camera " + camera.position.x + " " + camera.position.y);
-//        }
-//        return super.touchDragged(screenX, screenY, pointer);
-//    }
-
 
     public Games getGames() {
         return games;

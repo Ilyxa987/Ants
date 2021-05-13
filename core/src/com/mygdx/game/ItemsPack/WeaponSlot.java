@@ -55,6 +55,8 @@ public class WeaponSlot extends TextButton {
                 }
             }
         });
+
+        font.dispose();
     }
 
     @Override
