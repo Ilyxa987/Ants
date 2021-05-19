@@ -11,6 +11,7 @@ import com.mygdx.game.MyGame;
 import com.mygdx.game.SkillsPack.AttackSkill;
 import com.mygdx.game.SkillsPack.FireBall;
 import com.mygdx.game.SkillsPack.Skills;
+import com.mygdx.game.UnitsPack.Player;
 import com.mygdx.game.menu.Menu;
 
 public class SkillBar extends Stage {
@@ -20,12 +21,15 @@ public class SkillBar extends Stage {
     AttackSkill attackSkill;
     FireBall fireBall;
     Skills[] skillArray;
-
+    Texture green, yellow;
+    
 
     public SkillBar() {
 
         skillHubImage = new Texture("skillbar.png");
         at = new Texture("Attack.png");
+        green = new Texture("green.png");
+        yellow = new Texture("yellow.png");
 
         BitmapFont font = new BitmapFont();
         Skin skin = new Skin();
@@ -65,6 +69,15 @@ public class SkillBar extends Stage {
     @Override
     public void draw() {
         super.draw();
+    }
+
+    public void draw(SpriteBatch batch) {
+        for (int i = 0; i < Player.ac; i++) {
+            batch.draw(green, Gdx.graphics.getWidth() / 2 - 120 + i * 72, 100);
+        }
+        for (int i = 0; i < 4 - Player.ac; i++) {
+            batch.draw(yellow, Gdx.graphics.getWidth() / 2 + 120 - i * 72, 100);
+        }
     }
 
     @Override

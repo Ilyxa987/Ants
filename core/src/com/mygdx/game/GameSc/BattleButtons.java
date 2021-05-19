@@ -27,7 +27,6 @@ public class BattleButtons extends Stage {
         pauseImage = new Texture("pause.png");
         inventorImage = new Texture(Gdx.files.internal("inventor .png"));
         cameraImage = new Texture(Gdx.files.internal("cameraimage.png"));
-       // skillHubImage = new Texture("skillbar.png");
 
         BitmapFont font = new BitmapFont();
         Skin skin = new Skin();
@@ -35,7 +34,6 @@ public class BattleButtons extends Stage {
         skin.add("pause", pauseImage);
         skin.add("inventor", inventorImage);
         skin.add("camera", cameraImage);
-        /*skin.add("skillhub", skillHubImage);*/
 
         TextButton.TextButtonStyle pauseStyle = new TextButton.TextButtonStyle();
         pauseStyle.font = font;
@@ -54,11 +52,6 @@ public class BattleButtons extends Stage {
         cameraStyle.up = skin.getDrawable("camera");
         cameraStyle.down = skin.getDrawable("camera");
         cameraStyle.checked = skin.getDrawable("camera");
-        /*TextButton.TextButtonStyle skillHubStyle = new TextButton.TextButtonStyle();
-        skillHubStyle.font = font;
-        skillHubStyle.up = skin.getDrawable("skillhub");
-        skillHubStyle.down = skin.getDrawable("skillhub");
-        skillHubStyle.checked = skin.getDrawable("skillhub");*/
 
         pause = new TextButton("", pauseStyle);
         pause.setPosition(0.92f*Gdx.graphics.getWidth(), 0.85f*Gdx.graphics.getHeight());
@@ -71,13 +64,6 @@ public class BattleButtons extends Stage {
         cameraButton = new TextButton("", cameraStyle);
         cameraButton.setPosition(0.92f*Gdx.graphics.getWidth(), 0.63f*Gdx.graphics.getHeight());
         addActor(cameraButton);
-       /*skillHub = new TextButton("", skillHubStyle);
-        skillHub.setPosition(Gdx.graphics.getWidth() / 3.3f, -17);
-        addActor(skillHub);*/
-
-//        attackSkill = new AttackSkill("", inventorStyle);
-//        attackSkill.setPosition(0, Gdx.graphics.getHeight() / 2);
-//        addActor(attackSkill);
 
         pause.addListener(new ChangeListener() {
             @Override

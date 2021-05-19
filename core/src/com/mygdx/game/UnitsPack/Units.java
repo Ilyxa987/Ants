@@ -34,7 +34,6 @@ public abstract class Units extends Actor{
     int radios;
     GameMap gameMap;
     Rectangle rectangle;
-    Enemy enemy;
 
 
 

@@ -30,7 +30,7 @@ public class Player extends Units {
     Animation rWalk, lWalk;
     float stateTime;
     TextureRegion img, currentFrame;
-    Texture png;
+    public static int ac;
 
     public Player(String name, float x, float y, GameMap gameMap) {
         super(name, x, y, gameMap);
@@ -99,6 +99,7 @@ public class Player extends Units {
 
             @Override
             public void actionListener () {
+                ac = actionPoint;
                 if (actionPoint <= 0) {
                     Move = false;
                     stepMetr = 0;

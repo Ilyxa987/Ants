@@ -47,6 +47,7 @@ public class Games implements Screen {
         this.gameMap.draw();
         battleButtons.draw();
         this.batch.begin();
+        skillBar.draw(batch);
         this.batch.end();
         skillBar.draw();
         inventory.draw();
