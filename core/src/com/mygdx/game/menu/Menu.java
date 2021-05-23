@@ -26,7 +26,7 @@ public class Menu implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         createBackground();
-        buttons = new Buttons(game, this);
+        buttons = new Buttons(game);
 
 
     }

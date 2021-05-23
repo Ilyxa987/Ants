@@ -10,21 +10,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.GameSc.Games;
+import com.mygdx.game.GameSc.KatSc;
 import com.mygdx.game.MyGame;
 
 public class Buttons extends Stage {
     final MyGame game;
-    Texture buttonUpImage, buttonDownImage, settingsImage, exitImage, disign;
-    TextButton button, settings, exit, disignName;
-    public Games game1;
-    final Menu menu;
+    Texture buttonUpImage, buttonDownImage, settingsImage, exitImage, disign, skipImg;
+    public TextButton button, settings, exit, disignName, skip;
+    public KatSc game1;
+    public boolean katTF = true;
 
-    public Buttons(final MyGame mygame, final Menu menu) {
+    public Buttons(final MyGame mygame) {
         game = mygame;
 
-        this.menu = menu;
-
-        game1 = new Games(game, this.menu);
+        game1 = new KatSc(game);
 
         Pixmap pixmap = new Pixmap(300, 100, Pixmap.Format.Alpha);
         pixmap.setColor(0, 0, 0, 0);
@@ -71,6 +70,7 @@ public class Buttons extends Stage {
         disignStyle.down = skin.getDrawable("disign");
         disignStyle.checked = skin.getDrawable("disign");
 
+
         button = new TextButton("", textButtonStyle);
         button.setPosition(Gdx.graphics.getWidth() / 2 - buttonUpImage.getWidth() / 2, Gdx.graphics.getHeight() / 2 + settingsImage.getHeight() / 2);
         addActor(button);
@@ -92,7 +92,13 @@ public class Buttons extends Stage {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("It is test game");
-                game.setScreen(game1);
+                if (katTF){
+                    game.setScreen(new KatSc(game));
+                }else
+                    {
+                        game.setScreen(new Games(game));
+                    }
+
             }
         });
 
@@ -102,6 +108,7 @@ public class Buttons extends Stage {
                 System.out.println("SETTING");
             }
         });
+
 
         exit.addListener(new ChangeListener() {
             @Override

@@ -13,15 +13,13 @@ import com.mygdx.game.menu.Menu;
 
 public class BattleButtons extends Stage {
     final MyGame myGame;
-    final Menu menu;
     Texture pauseImage, inventorImage, cameraImage;
     TextButton pause, inventor, cameraButton;
     Inventory inventory;
     public static boolean cameraMove = false;
 
-    public BattleButtons(final MyGame myGame, final Menu menu, final Inventory inventory) {
+    public BattleButtons(final MyGame myGame, final Inventory inventory) {
         this.myGame = myGame;
-        this.menu = menu;
         this.inventory = inventory;
 
         pauseImage = new Texture("pause.png");
@@ -83,7 +81,7 @@ public class BattleButtons extends Stage {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("PAUSE");
-                   myGame.setScreen(menu);
+                   myGame.setScreen(new Menu(myGame));
             }
         });
 
