@@ -6,12 +6,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.game.MyGame;
-import com.mygdx.game.menu.Buttons;
 import com.mygdx.game.menu.KatButton;
-import com.mygdx.game.menu.Menu;
 
 public class Games implements Screen {
     final MyGame game;
@@ -23,6 +19,7 @@ public class Games implements Screen {
     SkillBar skillBar;
     Inventory inventory;
     KatButton katButton;
+    float stateTime;
 
     public Games(MyGame myGame) {
         game = myGame;
@@ -33,6 +30,7 @@ public class Games implements Screen {
         inputMultiplexer = new InputMultiplexer();
         skillBar = new SkillBar();
         katButton = new KatButton(game);
+        stateTime = 0;
     }
 
     public void show() {
@@ -55,6 +53,10 @@ public class Games implements Screen {
         this.batch.end();
         skillBar.draw();
         inventory.draw();
+        if (gameMap.player.hitpoints<0){
+            stateTime+=Gdx.graphics.getDeltaTime();
+            if (stateTime>1) game.setScreen(new deathScreen(game));
+        }
     }
 
     public void resize(int width, int height) {    }

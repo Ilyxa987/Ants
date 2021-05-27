@@ -86,8 +86,9 @@ public class Buttons extends Stage {
         addActor(exit);
 
         disignName = new TextButton("Designer: Alexey Popov", disignStyle);
-        disignName.setPosition(1, 1);
+        disignName.setPosition(Gdx.graphics.getWidth()*0.1f, Gdx.graphics.getHeight()*0.1f);
         addActor(disignName);
+        disignName.getLabel().setFontScale(5);
 
         button.addListener(new ChangeListener() {
 
@@ -130,5 +131,6 @@ public class Buttons extends Stage {
         buttonDownImage.dispose();
         settingsImage.dispose();
         exitImage.dispose();
+        disign.dispose();
     }
 }

@@ -62,7 +62,10 @@ public class KatSc implements Screen {
         if (katSc.getKeyFrameIndex(stateTime)==30){
             game.setScreen(new Games(game));
         }
-        if (stateTime>=2)button.draw();
+        if (stateTime>=2){
+            button.draw();
+            button.skip.setDisabled(false);
+        }
     }
 
     @Override

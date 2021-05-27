@@ -13,7 +13,7 @@ import com.mygdx.game.MyGame;
 
 public class KatButton extends Stage {
     final MyGame game;
-    TextButton skip;
+    public TextButton skip;
     Texture skipImg;
     public Games game1;
 
@@ -42,6 +42,7 @@ public class KatButton extends Stage {
                 dispose();
             }
         });
+        skip.setDisabled(true);
         font.dispose();
     }
 

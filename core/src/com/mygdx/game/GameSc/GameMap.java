@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class GameMap extends Stage implements GestureDetector.GestureListener {
     final Games games;
-    Player player;
+    public Player player;
     Enemy enemy;
     Vector3 touchPos, scroll;
     OrthographicCamera camera;

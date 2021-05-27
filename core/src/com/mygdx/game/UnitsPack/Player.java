@@ -1,14 +1,17 @@
 package com.mygdx.game.UnitsPack;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.GameSc.DeathButtons;
 import com.mygdx.game.GameSc.GameMap;
 import com.mygdx.game.GameSc.Games;
 import com.mygdx.game.GameSc.HealthBar;
@@ -25,12 +28,15 @@ public class Player extends Units {
     private static final int FRAME_ROWS = 2;
     Games playerGame;
     Inventory playerInventory;
-    Texture animll, animrr;
+    Texture animll, animrr, death;
     TextureRegion[] walkL,walkR;
     Animation rWalk, lWalk;
-    float stateTime;
+    float stateTime, stateTime1;
     TextureRegion img, currentFrame;
     public static int ac;
+    InputMultiplexer inputMultiplexer;
+    DeathButtons deathButtons;
+    SpriteBatch batch;
 
     public Player(String name, float x, float y, GameMap gameMap) {
         super(name, x, y, gameMap);
@@ -48,6 +54,7 @@ public class Player extends Units {
         radios = activeWeapon.radios;
         animll = new Texture("Left2.png");
         animrr = new Texture("Right2.png");
+        death = new Texture("ded.png");
         TextureRegion[][] tmpR = TextureRegion.split(animrr, animrr.getWidth()/2, animrr.getHeight()/2); // #10
         walkR = new TextureRegion[FRAME_COLS*FRAME_ROWS];
         int index = 0;
@@ -67,7 +74,9 @@ public class Player extends Units {
         }
         lWalk = new Animation(0.25f, walkL);
         stateTime = 0f;
+        stateTime1 = 0;
         rectangle = new Rectangle(x, y, 64, 98);
+        batch = new SpriteBatch();
     }
 
 
@@ -115,7 +124,7 @@ public class Player extends Units {
             }
 
 
-            // Замена активных предметов. Не работает
+    // Замена активных предметов. Не работает
             public void changeActiveItems () {
                 activeWeapon = (Weapon) playerInventory.getWeaponSlot().getWeaponl();
                 activeArmor = (Armor) playerInventory.getArmourSlot().getArmorl();
