@@ -100,6 +100,15 @@ public abstract class Units extends Actor{
             }
             this.rectangle.x = this.x;
             this.rectangle.y = this.y;
+            for (RectangleMapObject rectangleMapObject: gameMap.mapObjects.getByType(RectangleMapObject.class)) {
+                Rectangle rectangle = rectangleMapObject.getRectangle();
+                System.out.println("RECTANGLE" + rectangle.getX() + " " + rectangle.getY() + " " + rectangle.getWidth() + " " + rectangle.getHeight());
+                if (Intersector.overlaps(rectangle, this.getRectangle())) {
+                    this.x-=dx;
+                    this.y-=dy;
+                    //Stop();
+                }
+            }
         }
     }
 

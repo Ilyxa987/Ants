@@ -38,7 +38,7 @@ public class KatSc implements Screen {
              kat[index++] = tmpR[i][j];
          }
      }
-     katSc = new Animation(0.1f, kat);
+     katSc = new Animation(0.2f, kat);
      button = new KatButton(this.game);
      batch = new SpriteBatch();
      inputMultiplexer = new InputMultiplexer();
@@ -59,10 +59,10 @@ public class KatSc implements Screen {
         inputMultiplexer.addProcessor(button);
         Gdx.input.setInputProcessor(inputMultiplexer);
         batch.end();
-        if (katSc.getKeyFrameIndex(stateTime)==25){
+        if (katSc.getKeyFrameIndex(stateTime)==30){
             game.setScreen(new Games(game));
         }
-        if (stateTime>=3)button.draw();
+        if (stateTime>=2)button.draw();
     }
 
     @Override

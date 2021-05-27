@@ -68,7 +68,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         camera.setToOrtho(false, 1560, 720);
         camera.update();
 
-        map = new TmxMapLoader().load("newEra.tmx");
+        map = new TmxMapLoader().load("newEraAlfa.tmx");
         MapLayer mapLayer = map.getLayers().get("water");
         mapObjects = mapLayer.getObjects();
 
