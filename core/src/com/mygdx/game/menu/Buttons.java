@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -16,10 +17,11 @@ import com.mygdx.game.MyGame;
 
 public class Buttons extends Stage {
     final MyGame game;
-    Texture buttonUpImage, buttonDownImage, settingsImage, exitImage, disign;
-    TextButton button, settings, exit, disignName;
+    Texture buttonUpImage, buttonDownImage, settingsImage, exitImage, bluetoothTex;
+    TextButton button, settings, exit, bluetoothServerButton, bluetoothClientButton;
     public Games game1;
     final Menu menu;
+    BitmapFont font1;
 
     public Buttons(final MyGame mygame, final Menu menu) {
         game = mygame;
@@ -28,26 +30,29 @@ public class Buttons extends Stage {
 
         game1 = new Games(game, this.menu);
 
-        Pixmap pixmap = new Pixmap(300, 100, Pixmap.Format.Alpha);
-        pixmap.setColor(0, 0, 0, 0);
+        Pixmap pixmap = new Pixmap(300, 100, Pixmap.Format.RGB888);
+        pixmap.setColor(0, 0, 120, 1);
         pixmap.fill();
+
+        bluetoothTex = new Texture(pixmap);
 
         buttonUpImage = new Texture("play.png");
         buttonDownImage = new Texture("play.png");
         settingsImage = new Texture("settings.png");
         exitImage = new Texture("exit.png");
-        disign = new Texture(pixmap);
 
         pixmap.dispose();
 
         BitmapFont font = new BitmapFont();
+        font1 = new BitmapFont();
+        font1.setColor(0, 0, 0,0);
         Skin skin = new Skin();
 
         skin.add("play", buttonUpImage);
         skin.add("play", buttonDownImage);
         skin.add("settings", settingsImage);
         skin.add("exit", exitImage);
-        skin.add("disign", disign);
+        skin.add("blue", bluetoothTex);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font;
@@ -67,11 +72,11 @@ public class Buttons extends Stage {
         exitStyle.down = skin.getDrawable("exit");
         exitStyle.checked = skin.getDrawable("exit");
 
-        TextButton.TextButtonStyle disignStyle = new TextButton.TextButtonStyle();
-        disignStyle.font = font;
-        disignStyle.up = skin.getDrawable("disign");
-        disignStyle.down = skin.getDrawable("disign");
-        disignStyle.checked = skin.getDrawable("disign");
+        TextButton.TextButtonStyle bluetoothButtonStyle = new TextButton.TextButtonStyle();
+        bluetoothButtonStyle.font = font;
+        bluetoothButtonStyle.up = skin.getDrawable("blue");
+        bluetoothButtonStyle.down = skin.getDrawable("blue");
+        bluetoothButtonStyle.checked = skin.getDrawable("blue");
 
         button = new TextButton("", textButtonStyle);
         button.setPosition(Gdx.graphics.getWidth() / 2 - buttonUpImage.getWidth() / 2, Gdx.graphics.getHeight() / 2 + settingsImage.getHeight() / 2);
@@ -85,9 +90,13 @@ public class Buttons extends Stage {
         exit.setPosition(Gdx.graphics.getWidth() / 2 - exitImage.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 2 - settingsImage.getHeight() - exitImage.getHeight() / 2);
         addActor(exit);
 
-        disignName = new TextButton("Designer: Alexey Popov", disignStyle);
-        disignName.setPosition(1, 1);
-        addActor(disignName);
+//        bluetoothServerButton = new TextButton("Bluetooth Server", bluetoothButtonStyle);
+//        bluetoothServerButton.setPosition(1000, 100);
+//        addActor(bluetoothServerButton);
+//
+//        bluetoothClientButton = new TextButton("Client", bluetoothButtonStyle);
+//        bluetoothClientButton.setPosition(1000, 300);
+//        addActor(bluetoothClientButton);
 
         button.addListener(new ChangeListener() {
 
@@ -113,6 +122,12 @@ public class Buttons extends Stage {
                 dispose();
             }
         });
+
+//        bluetoothServerButton.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//            }
+//        });
         font.dispose();
     }
 

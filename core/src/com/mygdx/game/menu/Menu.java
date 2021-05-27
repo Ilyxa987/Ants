@@ -17,6 +17,7 @@ public class Menu implements Screen {
     SpriteBatch batch;
     Texture bgImage;
     Buttons buttons;
+    BitmapFont font1;
 
     public Menu(final MyGame mygame) {
         game = mygame;
@@ -28,7 +29,8 @@ public class Menu implements Screen {
         createBackground();
         buttons = new Buttons(game, this);
 
-
+        font1 = new BitmapFont();
+        font1.setColor(255,255,255, 1);
     }
 
     private void createBackground() {
@@ -54,6 +56,7 @@ public class Menu implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(bgImage, 0, 0);
+        font1.draw(batch, "Designer: Alexey Popov", 15, 20);
         batch.end();
 
         buttons.draw();
