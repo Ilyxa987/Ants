@@ -11,13 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.GdxBuild;
 import com.mygdx.game.GameSc.Games;
+import com.mygdx.game.GameSc.KatSc;
 import com.mygdx.game.MyGame;
 
 
 public class Buttons extends Stage {
     final MyGame game;
-    Texture buttonUpImage, buttonDownImage, settingsImage, exitImage, disign;
-    TextButton button, settings, exit, disignName;
+    Texture buttonUpImage, buttonDownImage, settingsImage, exitImage;
+    TextButton button, settings, exit;
     public Games game1;
     final Menu menu;
 
@@ -26,19 +27,12 @@ public class Buttons extends Stage {
 
         this.menu = menu;
 
-        game1 = new Games(game, this.menu);
-
-        Pixmap pixmap = new Pixmap(300, 100, Pixmap.Format.Alpha);
-        pixmap.setColor(0, 0, 0, 0);
-        pixmap.fill();
+        game1 = new Games(game);
 
         buttonUpImage = new Texture("play.png");
         buttonDownImage = new Texture("play.png");
         settingsImage = new Texture("settings.png");
         exitImage = new Texture("exit.png");
-        disign = new Texture(pixmap);
-
-        pixmap.dispose();
 
         BitmapFont font = new BitmapFont();
         Skin skin = new Skin();
@@ -47,7 +41,6 @@ public class Buttons extends Stage {
         skin.add("play", buttonDownImage);
         skin.add("settings", settingsImage);
         skin.add("exit", exitImage);
-        skin.add("disign", disign);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font;
@@ -67,12 +60,6 @@ public class Buttons extends Stage {
         exitStyle.down = skin.getDrawable("exit");
         exitStyle.checked = skin.getDrawable("exit");
 
-        TextButton.TextButtonStyle disignStyle = new TextButton.TextButtonStyle();
-        disignStyle.font = font;
-        disignStyle.up = skin.getDrawable("disign");
-        disignStyle.down = skin.getDrawable("disign");
-        disignStyle.checked = skin.getDrawable("disign");
-
         button = new TextButton("", textButtonStyle);
         button.setPosition(Gdx.graphics.getWidth() / 2 - buttonUpImage.getWidth() / 2, Gdx.graphics.getHeight() / 2 + settingsImage.getHeight() / 2);
         addActor(button);
@@ -85,16 +72,12 @@ public class Buttons extends Stage {
         exit.setPosition(Gdx.graphics.getWidth() / 2 - exitImage.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 2 - settingsImage.getHeight() - exitImage.getHeight() / 2);
         addActor(exit);
 
-        disignName = new TextButton("Designer: Alexey Popov", disignStyle);
-        disignName.setPosition(1, 1);
-        addActor(disignName);
-
         button.addListener(new ChangeListener() {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("It is test game");
-                game.setScreen(game1);
+                game.setScreen(new KatSc(game));
             }
         });
 

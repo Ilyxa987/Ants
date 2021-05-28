@@ -13,7 +13,6 @@ public class deathScreen implements Screen {
     final MyGame game;
     SpriteBatch batch = new SpriteBatch();
     OrthographicCamera camera = new OrthographicCamera();
-    GameMap gameMap;
     DeathButtons deathButtons;
     InputMultiplexer inputMultiplexer;
     float stateTime=0;
