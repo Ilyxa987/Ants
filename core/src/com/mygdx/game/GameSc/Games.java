@@ -7,11 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.mygdx.game.MyGame;
-import com.mygdx.game.menu.Menu;
+import com.mygdx.game.menu.KatButton;
 
 public class Games implements Screen {
     final MyGame game;
-    final Menu menu;
     private SpriteBatch batch = new SpriteBatch();
     OrthographicCamera camera = new OrthographicCamera();
     GameMap gameMap;
@@ -19,16 +18,19 @@ public class Games implements Screen {
     InputMultiplexer inputMultiplexer;
     SkillBar skillBar;
     Inventory inventory;
+    KatButton katButton;
+    float stateTime;
 
-    public Games(MyGame myGame, Menu menu) {
+    public Games(MyGame myGame) {
         game = myGame;
-        this.menu = menu;
-        this.camera.setToOrtho(false, 800.0F, 480.0F);
+        this.camera.setToOrtho(false,800.0F, 480.0F);
         inventory = new Inventory();
         this.gameMap = new GameMap(this);
-        battleButtons = new BattleButtons(game, this.menu, this.inventory);
+        battleButtons = new BattleButtons(game, this.inventory);
         inputMultiplexer = new InputMultiplexer();
         skillBar = new SkillBar();
+        katButton = new KatButton(game);
+        stateTime = 0;
     }
 
     public void show() {
@@ -51,10 +53,13 @@ public class Games implements Screen {
         this.batch.end();
         skillBar.draw();
         inventory.draw();
+        if (gameMap.player.hitpoints<0){
+            stateTime+=Gdx.graphics.getDeltaTime();
+            if (stateTime>1) game.setScreen(new deathScreen(game));
+        }
     }
 
-    public void resize(int width, int height) {
-    }
+    public void resize(int width, int height) {    }
 
     public void pause() {
     }
@@ -70,6 +75,7 @@ public class Games implements Screen {
         gameMap.dispose();
         skillBar.dispose();
         inventory.dispose();
+        katButton.dispose();
     }
 
     public Inventory getInventory() {

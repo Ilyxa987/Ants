@@ -2,17 +2,19 @@ package com.mygdx.game.GameSc;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.Effects.FireEffect;
 import com.mygdx.game.ItemsPack.Items;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 
 public class GameMap extends Stage implements GestureDetector.GestureListener {
     final Games games;
-    Player player;
+    public Player player;
     Enemy enemy;
     Vector3 touchPos, scroll;
     OrthographicCamera camera;
@@ -41,6 +43,8 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
     SpriteBatch batch;
     int[] fone;
     int[] ground;
+    Texture trainer, task;
+    float stateTime = 0f;
 
 
 
@@ -48,7 +52,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         this.games = games;
 
         player = new Player("Player", 1, 1, this);
-        enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3 * 2, Gdx.graphics.getHeight() / 2, this, player);
+        enemy = new Enemy("Enemy", Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight()/3, this, player);
         unitsArray = new ArrayList<>();
         unitsArray.add(player);
         unitsArray.add(enemy);
@@ -64,7 +68,7 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         camera.setToOrtho(false, 1560, 720);
         camera.update();
 
-        map = new TmxMapLoader().load("newEra.tmx");
+        map = new TmxMapLoader().load("newEraAlfa.tmx");
         MapLayer mapLayer = map.getLayers().get("water");
         mapObjects = mapLayer.getObjects();
 
@@ -74,16 +78,21 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
 
        fone = new int[] {0};
        ground = new int[] {1};
+       trainer = new Texture("trainer.png");
+       task = new Texture("Task.png");
+       stateTime = 0f;
     }
 
 
     @Override
     public void draw() {
+        stateTime += Gdx.graphics.getDeltaTime();
         super.draw();
         batch.begin();
         camera.update();
         renderer.setView(camera);
         renderer.render(fone);
+
         if (fireEffects != null){
             for (int i = 0; i < fireEffects.size(); i++) {
                 System.out.println("SIZE " + fireEffects.size());
@@ -130,6 +139,8 @@ public class GameMap extends Stage implements GestureDetector.GestureListener {
         renderer.render(ground);
         if (!take)
             take = true;
+        if (stateTime<3) batch.draw(trainer, 0, 0);
+        if (stateTime>3&& stateTime<7) batch.draw(task,0.2f*Gdx.graphics.getWidth(),Gdx.graphics.getHeight()*0.1f);
         batch.end();
     }
 
